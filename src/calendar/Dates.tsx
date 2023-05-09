@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { convertDateToString } from "../utils/dateUtils";
 
-
-type Props = {
+type DatesProps = {
   date: number;
   today: Date;
   month: number;
@@ -22,7 +21,7 @@ const Dates = ({
   checkInDate,
   checkOutDate,
   isOtherDay,
-}: Props) => {
+}: DatesProps) => {
   let isHighlighting = false;
   let isMiddleHighlighting = false;
   const thisDate = convertDateToString(new Date(`${year}-${month}-${date}`));
@@ -103,7 +102,8 @@ const DateNum = styled.div<{
   /* color: ${(props) => (props.isHighlighting ? "#fff" : "black")};
   color: ${(props) => (props.isBeforeToday ? "#D3D3D3" : "black")}; */
 
-  color: ${(props)=> (props.isBeforeToday? "#D3D3D3" : (props.isHighlighting?"#fff" : "black" ))};
+  color: ${(props) =>
+    props.isBeforeToday ? "#D3D3D3" : props.isHighlighting ? "#fff" : "black"};
 
   &:hover {
     ::after {
