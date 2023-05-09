@@ -78,11 +78,7 @@ const Body = ({
     <div>
       <Container>
         <BodyContentContainer>
-          <HeadTextContainer>
-            <HeadText>
-              {year}년 {month}월
-            </HeadText>
-          </HeadTextContainer>
+          
 
           <Days>
             {DAY.map((elm, idx) => {
@@ -122,21 +118,6 @@ const Container = styled.div`
 const BodyContentContainer = styled.div`
   margin: 20px;
   height: auto;
-`;
-
-const HeadTextContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 5vh;
-  margin: 1rem 0;
-  position: relative;
-`;
-
-const HeadText = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100%;
 `;
 
 const Days = styled.div`

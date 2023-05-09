@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import {
+  addDaysToDate,
+  addMonthsToDate,
+  convertDateToString,
+} from "../utils/dateUtils";
 import Body from "./Body";
-import { addDaysToDate, addMonthsToDate, convertDateToString } from "../utils/dateUtils";
-import styled from "styled-components";
-
+import Header from "./Header";
 
 type CheckInOutType = {
   checkIn?: Date;
@@ -10,38 +13,40 @@ type CheckInOutType = {
 };
 
 const Calendar = () => {
+  // convertDateToString 함수를 사용하여 날짜를 YYYY-MM-DD 형식의 문자열로 변환한 후에 다시 Date 객체로 변환함으로써, Date 객체를 일관된 형식으로 사용할 수 있게 됨.
   const today = new Date(convertDateToString(new Date()));
-  const [initialMonthDate, setInitialMonthDate] = useState(
-    new Date(convertDateToString(new Date()))
+  const [showMonthDate, setShowMonthDate] = useState(today);
+
+  const [checkIn, setCheckIn] = useState<Date | undefined>(
+    addDaysToDate(today, 7)
+  );
+  const [checkOut, setCheckOut] = useState<Date | undefined>(
+    addDaysToDate(today, 8)
   );
 
-  const [checkIn, setCheckIn] = useState<Date | undefined>(addDaysToDate(today, 7));
-  const [checkOut, setCheckOut] = useState<Date | undefined>(addDaysToDate(today, 8));
-
-  const [todayDate, setTodayDate] = useState(today);
-  const [showMonthDate, setShowMonthDate] = useState(initialMonthDate);
   const [checkInOut, setCheckInOut] = useState<CheckInOutType>({
     checkIn: checkIn,
     checkOut: checkOut,
   });
+
+  const handleChangeButton = (num: number) => {
+    const currentDate = addMonthsToDate(new Date(showMonthDate), num);
+    setShowMonthDate(currentDate);
+  };
+
   useEffect(() => {
     const periodData: string | null = localStorage.getItem("stayPeriod");
     setCheckIn(
-      periodData ? new Date(JSON.parse(periodData).checkIn) : addDaysToDate(today, 7)
+      periodData
+        ? new Date(JSON.parse(periodData).checkIn)
+        : addDaysToDate(today, 7)
     );
     setCheckOut(
-      periodData ? new Date(JSON.parse(periodData).checkOut) : addDaysToDate(today, 8)
+      periodData
+        ? new Date(JSON.parse(periodData).checkOut)
+        : addDaysToDate(today, 8)
     );
   }, []);
-
-  const handleChangePrevButton = () => {
-    const currentDate = addMonthsToDate(new Date(showMonthDate), -1);
-    setShowMonthDate(currentDate);
-  };
-  const handleChangeNextButton = () => {
-    const currentDate = addMonthsToDate(new Date(showMonthDate), +1);
-    setShowMonthDate(currentDate);
-  };
 
   const handleClickDate = (date: Date) => {
     const todayString = convertDateToString(today);
@@ -71,62 +76,23 @@ const Calendar = () => {
     }
   };
 
-  const laterMonthDate = addMonthsToDate(todayDate, 11);
-
   return (
     <div>
-      <HeadContainer>
-        <ButtonContainer>
-          {todayDate.getFullYear() >= showMonthDate.getFullYear() &&
-          todayDate.getMonth() >= showMonthDate.getMonth() ? (
-            <div></div>
-          ) : (
-            <Button onClick={handleChangePrevButton}>&lt;</Button>
-          )}
-          {laterMonthDate.getFullYear() <= showMonthDate.getFullYear() &&
-          laterMonthDate.getMonth() <= showMonthDate.getMonth() ? (
-            <div></div>
-          ) : (
-            <Button onClick={handleChangeNextButton}>&gt;</Button>
-          )}
-        </ButtonContainer>
-      </HeadContainer>
-
+      <Header
+        today={today}
+        month={showMonthDate.getMonth() + 1}
+        year={showMonthDate.getFullYear()}
+        showMonthDate={showMonthDate}
+        handleChangeButton={handleChangeButton}
+      />
       <Body
         today={today}
         month={showMonthDate.getMonth() + 1}
         year={showMonthDate.getFullYear()}
         handleClickDate={handleClickDate}
-        
       />
     </div>
   );
 };
 
 export default Calendar;
-
-const HeadContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  position: absolute;
-  top: 35px;
-  width: 100%;
-  z-index: 10;
-`;
-
-const Button = styled.button`
-  border: none;
-  background: transparent;
-  &:active {
-    transform: scale(1.2);
-  }
-`;
