@@ -25,7 +25,6 @@ const Header = ({
     laterMonthDate.getMonth() <= showMonthDate.getMonth();
 
   return (
-    <div>
       <HeadContainer>
         <HeadTextContainer>
           <HeadText>
@@ -45,7 +44,6 @@ const Header = ({
           )}
         </ButtonContainer>
       </HeadContainer>
-    </div>
   );
 };
 

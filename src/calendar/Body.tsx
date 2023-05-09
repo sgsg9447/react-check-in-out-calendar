@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Dates from "./Dates";
 import { generateMonthCalendar } from "../utils/dateUtils";
-import uuid from "react-uuid";
 
 type BodyProps = {
   today: Date;
@@ -13,6 +12,8 @@ type BodyProps = {
   checkOutDate?: Date;
 };
 
+const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+
 const Body = ({
   today,
   month,
@@ -22,7 +23,6 @@ const Body = ({
   checkOutDate,
 }: BodyProps) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
-  const DAY = ["일", "월", "화", "수", "목", "금", "토"];
 
   useEffect(() => {
     setTotalDate(generateMonthCalendar(year, month));
@@ -32,15 +32,15 @@ const Body = ({
     <Container>
       <BodyContentContainer>
         <Days>
-          {DAY.map((elm) => {
-            return <div key={uuid()}>{elm}</div>;
-          })}
+          {DAYS_OF_WEEK.map((elm, index) => (
+            <div key={index}>{elm}</div>
+          ))}
         </Days>
 
         <DatesContainer>
-          {totalDate.map((date) => (
+          {totalDate.map((date, index) => (
             <Dates
-              key={uuid()}
+              key={index}
               year={date.getFullYear()}
               month={date.getMonth() + 1}
               date={date.getDate()}
@@ -49,7 +49,7 @@ const Body = ({
               checkInDate={checkInDate}
               checkOutDate={checkOutDate}
               today={today}
-            ></Dates>
+            />
           ))}
         </DatesContainer>
       </BodyContentContainer>
@@ -61,12 +61,10 @@ export default Body;
 
 const Container = styled.div`
   width: 100%;
-  height: auto;
   position: relative;
 `;
 const BodyContentContainer = styled.div`
   margin: 20px;
-  height: auto;
 `;
 
 const Days = styled.div`

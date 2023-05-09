@@ -25,8 +25,7 @@ const Calendar = () => {
   });
 
   const handleChangeButton = (num: number) => {
-    const currentDate = addMonthsToDate(showMonthDate, num);
-    setShowMonthDate(currentDate);
+    setShowMonthDate(addMonthsToDate(showMonthDate, num));
   };
 
   useEffect(() => {
@@ -46,14 +45,21 @@ const Calendar = () => {
   }, []);
 
   const handleClickDate = (date: Date) => {
+    //오늘 날짜를 문자열 형식으로 반환
     const todayString = convertDateToString(today);
+    // 클릭한 날짜를 문자열 형식으로 반환
     const dateString = convertDateToString(date);
     //오늘날짜보다 클릭한 날짜가 작으면 아무일도 일어나지않게 return
     if (todayString > dateString) {
       return;
     }
-    //체크인값이 없는경우 ||checkIn값과 checkOut값이 있는경우 체크인 값을 오늘날짜로 해주기
-    if (!checkInOut.checkIn || (checkInOut.checkIn && checkInOut.checkOut)) {
+    // 체크인 날짜가 없거나 체크인 및 체크아웃 날짜가 모두 설정된 경우,
+    // 또는 클릭한 날짜가 체크인 날짜보다 작은 경우
+    if (
+      !checkInOut.checkIn ||
+      (checkInOut.checkIn && checkInOut.checkOut) ||
+      date < checkInOut.checkIn
+    ) {
       setCheckInOut({
         checkIn: date,
         checkOut: undefined,
@@ -63,12 +69,6 @@ const Calendar = () => {
       setCheckInOut({
         ...checkInOut,
         checkOut: date,
-      });
-      // 클릭한 날이 체크인 값 보다 작을경우, 즉 오늘날짜로 기본 셋팅되었을텐데 그거보다 이전 날짜를 클릭하면 체크인을 오늘날짜로 설정해줘야지 그러며 초기화!
-    } else if (date < checkInOut.checkIn) {
-      setCheckInOut({
-        checkIn: date,
-        checkOut: undefined,
       });
     }
   };
