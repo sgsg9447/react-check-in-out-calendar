@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { addMonthsToDate } from "../utils/dateUtils";
+import { addMonthsToDate } from "../../utils/dateUtils";
 
-type HeaderProps = {
+type WeekdayHeaderProps = {
   today: Date;
   month: number;
   year: number;
@@ -9,13 +9,13 @@ type HeaderProps = {
   handleChangeButton: (num: number) => void;
 };
 
-const Header = ({
+const WeekdayHeader = ({
   today,
   month,
   year,
   showMonthDate,
   handleChangeButton,
-}: HeaderProps) => {
+}: WeekdayHeaderProps) => {
   const laterMonthDate = addMonthsToDate(today, 11);
   const isPrevButtonDisabled =
     today.getFullYear() >= showMonthDate.getFullYear() &&
@@ -25,29 +25,29 @@ const Header = ({
     laterMonthDate.getMonth() <= showMonthDate.getMonth();
 
   return (
-      <HeadContainer>
-        <HeadTextContainer>
-          <HeadText>
-            {year}년 {month}월
-          </HeadText>
-        </HeadTextContainer>
-        <ButtonContainer>
-          {isPrevButtonDisabled ? (
-            <div></div>
-          ) : (
-            <Button onClick={() => handleChangeButton(-1)}>&lt;</Button>
-          )}
-          {isNextButtonDisabled ? (
-            <div></div>
-          ) : (
-            <Button onClick={() => handleChangeButton(1)}>&gt;</Button>
-          )}
-        </ButtonContainer>
-      </HeadContainer>
+    <HeadContainer>
+      <HeadTextContainer>
+        <HeadText>
+          {year}년 {month}월
+        </HeadText>
+      </HeadTextContainer>
+      <ButtonContainer>
+        {isPrevButtonDisabled ? (
+          <div></div>
+        ) : (
+          <Button onClick={() => handleChangeButton(-1)}>&lt;</Button>
+        )}
+        {isNextButtonDisabled ? (
+          <div></div>
+        ) : (
+          <Button onClick={() => handleChangeButton(1)}>&gt;</Button>
+        )}
+      </ButtonContainer>
+    </HeadContainer>
   );
 };
 
-export default Header;
+export default WeekdayHeader;
 
 const HeadContainer = styled.div`
   width: 100%;

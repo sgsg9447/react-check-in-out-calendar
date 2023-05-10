@@ -3,9 +3,9 @@ import {
   addDaysToDate,
   addMonthsToDate,
   convertDateToString,
-} from "../utils/dateUtils";
-import Body from "./Body";
-import Header from "./Header";
+} from "../../utils/dateUtils";
+import WeekdayHeader from "./WeekdayHeader";
+import MonthView from "./MonthView";
 
 type CheckInOutType = {
   checkIn?: Date;
@@ -75,14 +75,14 @@ const Calendar = () => {
 
   return (
     <div>
-      <Header
+      <WeekdayHeader
         today={today}
         month={showMonthDate.getMonth() + 1}
         year={showMonthDate.getFullYear()}
         showMonthDate={showMonthDate}
         handleChangeButton={handleChangeButton}
       />
-      <Body
+      <MonthView
         today={today}
         month={showMonthDate.getMonth() + 1}
         year={showMonthDate.getFullYear()}

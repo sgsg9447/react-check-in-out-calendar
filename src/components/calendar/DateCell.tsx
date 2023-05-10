@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { convertDateToString } from "../utils/dateUtils";
+import { convertDateToString } from "../../utils/dateUtils";
 
-type DatesProps = {
+type DateCellProps = {
   date: number;
   today: Date;
   month: number;
@@ -47,7 +47,7 @@ const isDateWithinRange = (
   );
 };
 
-const Dates = ({
+const DateCell = ({
   date,
   handleClickDate,
   today,
@@ -56,7 +56,7 @@ const Dates = ({
   checkInDate,
   checkOutDate,
   isOtherDay,
-}: DatesProps) => {
+}: DateCellProps) => {
   const currentDate = new Date(year, month - 1, date);
   // 날짜 문자열 변환
   const currentDateString = convertDateToString(currentDate);
@@ -108,7 +108,7 @@ const Dates = ({
   );
 };
 
-export default Dates;
+export default DateCell;
 
 const centered = css`
   position: absolute;

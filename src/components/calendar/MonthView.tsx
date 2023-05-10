@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Dates from "./Dates";
-import { generateMonthCalendar } from "../utils/dateUtils";
+import { generateMonthCalendar } from "../../utils/dateUtils";
+import DateCell from "./DateCell";
 
-type BodyProps = {
+type MonthViewProps = {
   today: Date;
   month: number;
   year: number;
@@ -14,14 +14,14 @@ type BodyProps = {
 
 const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
 
-const Body = ({
+const MonthView = ({
   today,
   month,
   year,
   handleClickDate,
   checkInDate,
   checkOutDate,
-}: BodyProps) => {
+}: MonthViewProps) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Body = ({
 
         <DatesContainer>
           {totalDate.map((date, index) => (
-            <Dates
+            <DateCell
               key={index}
               year={date.getFullYear()}
               month={date.getMonth() + 1}
@@ -57,7 +57,7 @@ const Body = ({
   );
 };
 
-export default Body;
+export default MonthView;
 
 const Container = styled.div`
   width: 100%;
