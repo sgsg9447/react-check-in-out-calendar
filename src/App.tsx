@@ -1,10 +1,16 @@
 import "./App.css";
 import Calendar from "./components/calendar";
+import { BookingDatesProvider } from "./context/BookingDatesContext";
+import { CurrentMonthProvider } from "./context/CurrentMonthContext";
 
 function App() {
   return (
     <>
-      <Calendar />
+      <CurrentMonthProvider>
+        <BookingDatesProvider>
+          <Calendar />
+        </BookingDatesProvider>
+      </CurrentMonthProvider>
     </>
   );
 }

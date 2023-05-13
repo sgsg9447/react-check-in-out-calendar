@@ -1,34 +1,28 @@
 import styled from "styled-components";
 import { addMonthsToDate } from "../../utils/dateUtils";
+import { useContext } from "react";
+import { CurrentMonthContext } from "../../context/CurrentMonthContext";
 
 type WeekdayHeaderProps = {
   today: Date;
-  month: number;
-  year: number;
-  showMonthDate: Date;
   handleChangeButton: (num: number) => void;
 };
 
-const WeekdayHeader = ({
-  today,
-  month,
-  year,
-  showMonthDate,
-  handleChangeButton,
-}: WeekdayHeaderProps) => {
+const WeekdayHeader = ({ today, handleChangeButton }: WeekdayHeaderProps) => {
+  const { currentMonth } = useContext(CurrentMonthContext);
   const laterMonthDate = addMonthsToDate(today, 11);
   const isPrevButtonDisabled =
-    today.getFullYear() >= showMonthDate.getFullYear() &&
-    today.getMonth() >= showMonthDate.getMonth();
+    today.getFullYear() >= currentMonth.getFullYear() &&
+    today.getMonth() >= currentMonth.getMonth();
   const isNextButtonDisabled =
-    laterMonthDate.getFullYear() <= showMonthDate.getFullYear() &&
-    laterMonthDate.getMonth() <= showMonthDate.getMonth();
+    laterMonthDate.getFullYear() <= currentMonth.getFullYear() &&
+    laterMonthDate.getMonth() <= currentMonth.getMonth();
 
   return (
     <HeadContainer>
       <HeadTextContainer>
         <HeadText>
-          {year}년 {month}월
+          {currentMonth.getFullYear()}년 {currentMonth.getMonth() + 1}월
         </HeadText>
       </HeadTextContainer>
       <ButtonContainer>

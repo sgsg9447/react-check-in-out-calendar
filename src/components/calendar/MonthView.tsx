@@ -1,28 +1,23 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { generateMonthCalendar } from "../../utils/dateUtils";
 import DateCell from "./DateCell";
+import { CurrentMonthContext } from "../../context/CurrentMonthContext";
+import { BookingDatesContext } from "../../context/BookingDatesContext";
 
 type MonthViewProps = {
   today: Date;
-  month: number;
-  year: number;
   handleClickDate: (date: Date) => void;
-  checkInDate?: Date;
-  checkOutDate?: Date;
 };
 
 const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
 
-const MonthView = ({
-  today,
-  month,
-  year,
-  handleClickDate,
-  checkInDate,
-  checkOutDate,
-}: MonthViewProps) => {
+const MonthView = ({ today, handleClickDate }: MonthViewProps) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
+  const { currentMonth } = useContext(CurrentMonthContext);
+  const { bookingDates } = useContext(BookingDatesContext);
+  const month = currentMonth.getMonth() + 1;
+  const year = currentMonth.getFullYear();
 
   useEffect(() => {
     setTotalDate(generateMonthCalendar(year, month));
@@ -46,8 +41,8 @@ const MonthView = ({
               date={date.getDate()}
               isOtherDay={date.getMonth() + 1 !== month}
               handleClickDate={handleClickDate}
-              checkInDate={checkInDate}
-              checkOutDate={checkOutDate}
+              checkInDate={bookingDates.checkIn}
+              checkOutDate={bookingDates.checkOut}
               today={today}
             />
           ))}
