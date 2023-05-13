@@ -5,6 +5,7 @@ import { CurrentMonthContext } from "../../context/CurrentMonthContext";
 import useHandleClickDate from "../../hooks/useHandleClickDate";
 import * as dayjs from "dayjs";
 import styled from "styled-components";
+import BookingDatesView from "./BookingDatesView";
 
 const Calendar = ({ numMonths = 1 }) => {
   const today: dayjs.Dayjs = dayjs();
@@ -16,6 +17,7 @@ const Calendar = ({ numMonths = 1 }) => {
 
   return (
     <div>
+      <BookingDatesView />
       <MonthNavigation today={today} handleChangeButton={handleChangeButton} />
       <CalendarContainer>
         {Array.from({ length: numMonths }).map((_, index) => {

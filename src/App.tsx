@@ -3,12 +3,19 @@ import Calendar from "./components/calendar";
 import { BookingDatesProvider } from "./context/BookingDatesContext";
 import { CurrentMonthProvider } from "./context/CurrentMonthContext";
 
-function App() {
+interface CalendarProps {
+  mainColor: string;
+  subMainColor: string;
+  startFromMonday?: boolean;
+  numMonths: number;
+}
+
+function App(props: CalendarProps) {
   return (
     <>
       <CurrentMonthProvider>
         <BookingDatesProvider>
-          <Calendar numMonths={1} />
+          <Calendar {...props} />
         </BookingDatesProvider>
       </CurrentMonthProvider>
     </>
