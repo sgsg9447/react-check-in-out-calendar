@@ -1,22 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { generateMonthCalendar } from "../../utils/dateUtils";
 import DateCell from "./DateCell";
-import { CurrentMonthContext } from "../../context/CurrentMonthContext";
 import * as dayjs from "dayjs";
 
 type MonthViewProps = {
   today: dayjs.Dayjs;
+  month: number;
+  year: number;
   handleClickDate: (date: dayjs.Dayjs) => void;
 };
 
 const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
 
-const MonthView = ({ today, handleClickDate }: MonthViewProps) => {
+const MonthView = ({ today, month, year, handleClickDate }: MonthViewProps) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
-  const { currentMonth } = useContext(CurrentMonthContext);
-  const month = currentMonth.month() + 1;
-  const year = currentMonth.year();
 
   useEffect(() => {
     setTotalDate(generateMonthCalendar(year, month));
@@ -24,6 +22,11 @@ const MonthView = ({ today, handleClickDate }: MonthViewProps) => {
 
   return (
     <Container>
+      <WeekdayHeaderContainer>
+        <WeekdayHeaderText>
+          {year}년 {month}월
+        </WeekdayHeaderText>
+      </WeekdayHeaderContainer>
       <BodyContentContainer>
         <Days>
           {DAYS_OF_WEEK.map((elm, index) => (
@@ -54,7 +57,25 @@ export default MonthView;
 const Container = styled.div`
   width: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
 `;
+
+const WeekdayHeaderContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 5vh;
+  margin: 1.5rem 0;
+  position: relative;
+`;
+
+const WeekdayHeaderText = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+`;
+
 const BodyContentContainer = styled.div`
   margin: 20px;
 `;

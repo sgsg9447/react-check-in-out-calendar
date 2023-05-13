@@ -8,7 +8,7 @@ function App() {
     <>
       <CurrentMonthProvider>
         <BookingDatesProvider>
-          <Calendar />
+          <Calendar numMonths={1} />
         </BookingDatesProvider>
       </CurrentMonthProvider>
     </>
