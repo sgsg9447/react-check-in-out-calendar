@@ -9,16 +9,25 @@ type MonthViewProps = {
   month: number;
   year: number;
   handleClickDate: (date: dayjs.Dayjs) => void;
+  startFromMonday?: boolean;
 };
 
-const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
-
-const MonthView = ({ today, month, year, handleClickDate }: MonthViewProps) => {
+const MonthView = ({
+  today,
+  month,
+  year,
+  handleClickDate,
+  startFromMonday = false,
+}: MonthViewProps) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
+  const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+  const daysOfWeek = startFromMonday
+    ? DAYS_OF_WEEK.slice(1).concat(DAYS_OF_WEEK[0])
+    : DAYS_OF_WEEK;
 
   useEffect(() => {
-    setTotalDate(generateMonthCalendar(year, month));
-  }, [year, month]);
+    setTotalDate(generateMonthCalendar(year, month, startFromMonday));
+  }, [year, month, startFromMonday]);
 
   return (
     <Container>
@@ -29,7 +38,7 @@ const MonthView = ({ today, month, year, handleClickDate }: MonthViewProps) => {
       </WeekdayHeaderContainer>
       <BodyContentContainer>
         <Days>
-          {DAYS_OF_WEEK.map((elm, index) => (
+          {daysOfWeek.map((elm, index) => (
             <div key={index}>{elm}</div>
           ))}
         </Days>

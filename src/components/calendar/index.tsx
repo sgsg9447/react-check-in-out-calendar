@@ -30,6 +30,7 @@ const Calendar = ({ numMonths = 1 }) => {
               month={month}
               year={year}
               handleClickDate={handleClickDate}
+              // startFromMonday={true}
             />
           );
         })}
