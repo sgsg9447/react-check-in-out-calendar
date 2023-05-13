@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
 ${reset}
@@ -34,20 +34,19 @@ button {
   cursor: pointer;
   border: none;
   outline: none;
+  background: transparent;
+  &:active {
+    transform: scale(1.2);
+  }
 }
 
 :root {
     --color-white: #fff;
-    --color-black: #000;
-    --color-border: #cdcdcd;
-    --color-hover: #e8e8e8;
-    --color-subTitle: #9fa1a7;
-    --color-catchphrase: #11482d;
+    --color-black: #0f0f0f;
+    --color-light-gray: #D3D3D3;
     --color-main: #ff375c;
-    --color-loading: #f1f1f1;
-    --color-mobileBackground: #eeeeee;
+    --color-sub-main: #FEC0CA;
   }
-
 `;
 
 export default GlobalStyle;

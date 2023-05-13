@@ -61,14 +61,14 @@ const BodyContentContainer = styled.div`
 
 const Days = styled.div`
   display: flex;
-  color: #969696;
+  color: var(--color-black);
   width: 100%;
   height: 2rem;
   justify-content: space-around;
   align-items: center;
 `;
 
-const DatesContainer = styled.div`
+const DatesContainer = styled.ul`
   display: flex;
   flex-flow: row wrap;
   width: 100%;

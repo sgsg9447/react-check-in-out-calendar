@@ -89,7 +89,6 @@ const DatesContainer = styled.li`
 `;
 
 const DateNum = styled.div<{
- 
   isHighlighting?: boolean;
   isOtherDay: boolean;
   isBeforeToday: boolean;
@@ -97,14 +96,20 @@ const DateNum = styled.div<{
   display: ${(props) => (props.isOtherDay ? "none" : "block")};
 
   color: ${(props) =>
-    props.isBeforeToday ? "#D3D3D3" : props.isHighlighting ? "#fff" : "black"};
+    props.isBeforeToday
+      ? "var(--color-light-gray)"
+      : props.isHighlighting
+      ? "var(--color-white)"
+      : "var(--color-black)"};
 
   &:hover {
     ::after {
       content: "";
       display: block;
       border: ${(props) =>
-        props.isBeforeToday ? "#fff" : "3px solid var(--color-main)"};
+        props.isBeforeToday
+          ? "var(--color-white)"
+          : "3px solid var(--color-main)"};
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -128,13 +133,12 @@ const MiddleHighlighting = styled.div`
   height: 40px;
   ${centered}
   border-radius: 50%;
-  background-color: pink;
+  background-color: var(--color-sub-main);
 `;
 
 const TodayDot = styled.div<{ isHighlighting: boolean }>`
   background-color: ${(props) =>
-    props.isHighlighting ? "#fff" : "var(--color-main)"};
-
+    props.isHighlighting ? "var(--color-white)" : "var(--color-main)"};
   border-radius: 50%;
   width: 5px;
   height: 5px;

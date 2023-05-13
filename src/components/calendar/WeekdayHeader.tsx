@@ -27,34 +27,31 @@ const WeekdayHeader = ({ today, handleChangeButton }: WeekdayHeaderProps) => {
     laterMonthDate.getMonth() <= currentMonth.month();
 
   return (
-    <HeadContainer>
+    <Container>
       <HeadTextContainer>
-        <HeadText>
-          {currentMonth.year()}년 {currentMonth.month() + 1}월
-        </HeadText>
+        <HeadText>{currentMonth.format("YYYY년 M월")}</HeadText>
       </HeadTextContainer>
       <ButtonContainer>
         {isPrevButtonDisabled ? (
           <div></div>
         ) : (
-          <Button onClick={() => handleChangeButton(-1)}>&lt;</Button>
+          <button onClick={() => handleChangeButton(-1)}>&lt;</button>
         )}
         {isNextButtonDisabled ? (
           <div></div>
         ) : (
-          <Button onClick={() => handleChangeButton(1)}>&gt;</Button>
+          <button onClick={() => handleChangeButton(1)}>&gt;</button>
         )}
       </ButtonContainer>
-    </HeadContainer>
+    </Container>
   );
 };
 
 export default WeekdayHeader;
 
-const HeadContainer = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
   position: relative;
 `;
 
@@ -62,7 +59,7 @@ const HeadTextContainer = styled.div`
   display: flex;
   width: 100%;
   height: 5vh;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
   position: relative;
 `;
 
@@ -81,13 +78,4 @@ const ButtonContainer = styled.div`
   position: absolute;
   top: 35px;
   width: 100%;
-  z-index: 10;
-`;
-
-const Button = styled.button`
-  border: none;
-  background: transparent;
-  &:active {
-    transform: scale(1.2);
-  }
 `;
