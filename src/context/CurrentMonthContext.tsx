@@ -1,14 +1,15 @@
 import React, { createContext, useState, ReactNode } from "react";
+import * as dayjs from "dayjs";
 
 // 컨텍스트에서 사용될 타입을 정의합니다.
 type CurrentMonthContextType = {
-  currentMonth: Date;
-  setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
+  currentMonth: dayjs.Dayjs;
+  setCurrentMonth: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
 };
 
 // 초기 컨텍스트 값을 설정합니다.
 const initialContextValue: CurrentMonthContextType = {
-  currentMonth: new Date(),
+  currentMonth: dayjs(),
   setCurrentMonth: () => {},
 };
 
@@ -21,7 +22,7 @@ type CurrentMonthProviderProps = {
 };
 
 const CurrentMonthProvider = ({ children }: CurrentMonthProviderProps) => {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState<dayjs.Dayjs>(dayjs());
   const value = { currentMonth, setCurrentMonth };
 
   return (
