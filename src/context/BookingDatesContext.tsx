@@ -1,10 +1,10 @@
 import React, { createContext, useState, ReactNode, useEffect } from "react";
-import { addDaysToDate } from "../utils/dateUtils";
+import * as dayjs from "dayjs";
 
 // 컨텍스트에서 사용될 타입을 정의합니다.
 type BookingDatesType = {
-  checkIn?: Date;
-  checkOut?: Date;
+  checkIn?: dayjs.Dayjs;
+  checkOut?: dayjs.Dayjs;
 };
 
 type BookingDatesContextType = {
@@ -31,8 +31,8 @@ type BookingDatesProviderProps = {
 
 const BookingDatesProvider = ({ children }: BookingDatesProviderProps) => {
   const [bookingDates, setBookingDates] = useState<BookingDatesType>({
-    checkIn: undefined,
-    checkOut: undefined,
+    checkIn: dayjs().add(7, "day"),
+    checkOut: dayjs().add(8, "day"),
   });
 
   useEffect(() => {
@@ -40,15 +40,8 @@ const BookingDatesProvider = ({ children }: BookingDatesProviderProps) => {
     if (periodData) {
       const { checkIn, checkOut } = JSON.parse(periodData);
       setBookingDates({
-        checkIn: new Date(checkIn),
-        checkOut: new Date(checkOut),
-      });
-    } else {
-      const defaultCheckInDate = addDaysToDate(new Date(), 7);
-      const defaultCheckOutDate = addDaysToDate(new Date(), 8);
-      setBookingDates({
-        checkIn: defaultCheckInDate,
-        checkOut: defaultCheckOutDate,
+        checkIn: dayjs(checkIn),
+        checkOut: dayjs(checkOut),
       });
     }
   }, []);

@@ -1,86 +1,47 @@
 import styled, { css } from "styled-components";
-import { convertDateToString } from "../../utils/dateUtils";
+import dayjs from "dayjs";
+import { useContext } from "react";
+import { BookingDatesContext } from "../../context/BookingDatesContext";
 
 type DateCellProps = {
+  today: dayjs.Dayjs;
   date: number;
-  today: Date;
   month: number;
   year: number;
-  handleClickDate: (date: Date) => void;
-  checkInDate?: Date;
-  checkOutDate?: Date;
   isOtherDay: boolean;
+  handleClickDate: (date: dayjs.Dayjs) => void;
 };
-// 선택된 날짜를 확인합니다.
-const isDateSelected = (
-  currentDateString: string,
-  checkInDateString: string | undefined,
-  checkOutDateString: string | undefined,
-  isOtherDay: boolean
-) => {
-  // 현재 날짜가 체크인 날짜나 체크아웃 날짜와 같으면 true, 그렇지 않으면 false
-  // isDateSelected 함수는 현재 날짜가 체크인 날짜 또는 체크아웃 날짜와 일치하면 true를 반환
-  // isOtherDay가 참이면 (즉, 현재 날짜가 이전이나 다음 달의 날짜이면) false를 반환
-  return (
+// 주어진 날짜가 선택된 체크인 또는 체크아웃 날짜와 일치하는지 확인하는 함수입니다.
+
+const DateCell = ({
+  today,
+  date,
+  month,
+  year,
+  isOtherDay,
+  handleClickDate,
+}: DateCellProps) => {
+  const currentDate = dayjs(new Date(year, month - 1, date));
+  const { bookingDates } = useContext(BookingDatesContext);
+
+  // 날짜 문자열 변환
+  const currentDateString = currentDate.format("YYYY-MM-DD");
+  const todayDateString = today.format("YYYY-MM-DD");
+  const checkInDateString = bookingDates.checkIn?.format("YYYY-MM-DD");
+  const checkOutDateString = bookingDates.checkOut?.format("YYYY-MM-DD");
+
+  // 선택된 날짜 및 범위 내 날짜 확인
+  const isSelectedDate =
     !isOtherDay &&
     (checkInDateString === currentDateString ||
-      checkOutDateString === currentDateString)
-  );
-};
+      checkOutDateString === currentDateString);
 
-// 날짜가 체크인과 체크아웃 날짜 사이에 있는지 확인함
-const isDateWithinRange = (
-  currentDateString: string,
-  checkInDateString: string | undefined,
-  checkOutDateString: string | undefined,
-  isOtherDay: boolean
-) => {
-  // 현재 날짜가 체크인 날짜와 체크아웃 날짜 사이에 있으면 true, 그렇지 않으면 false
-  // isDateWithinRange 함수는 현재 날짜가 체크인 날짜와 체크아웃 날짜 사이에 있으면 true를 반환
-  // isOtherDay가 참이면 (즉, 현재 날짜가 이전이나 다음 달의 날짜이면) false를 반환
-  return (
+  const isWithinRange =
     !isOtherDay &&
     checkInDateString &&
     checkOutDateString &&
     checkInDateString < currentDateString &&
-    currentDateString < checkOutDateString
-  );
-};
-
-const DateCell = ({
-  date,
-  handleClickDate,
-  today,
-  month,
-  year,
-  checkInDate,
-  checkOutDate,
-  isOtherDay,
-}: DateCellProps) => {
-  const currentDate = new Date(year, month - 1, date);
-  // 날짜 문자열 변환
-  const currentDateString = convertDateToString(currentDate);
-  const todayDateString = convertDateToString(today);
-  const checkInDateString = checkInDate
-    ? convertDateToString(checkInDate)
-    : undefined;
-  const checkOutDateString = checkOutDate
-    ? convertDateToString(checkOutDate)
-    : undefined;
-
-  // 선택된 날짜 및 범위 내 날짜 확인
-  const isSelectedDate = isDateSelected(
-    currentDateString,
-    checkInDateString,
-    checkOutDateString,
-    isOtherDay
-  );
-  const isWithinRange = isDateWithinRange(
-    currentDateString,
-    checkInDateString,
-    checkOutDateString,
-    isOtherDay
-  );
+    currentDateString < checkOutDateString;
 
   // 날짜 클릭시 호출되는 함수, 전달받은 handleClickDate에 현재 날짜 전달
   const handleDateClick = () => {
@@ -98,8 +59,6 @@ const DateCell = ({
       <DateNum
         isBeforeToday={currentDateString < todayDateString}
         isOtherDay={isOtherDay}
-        checkInDate={checkInDate}
-        checkOutDate={checkOutDate}
         isHighlighting={isSelectedDate}
       >
         {date}
@@ -130,8 +89,7 @@ const DatesContainer = styled.li`
 `;
 
 const DateNum = styled.div<{
-  checkInDate?: Date;
-  checkOutDate?: Date;
+ 
   isHighlighting?: boolean;
   isOtherDay: boolean;
   isBeforeToday: boolean;
