@@ -1,11 +1,12 @@
 import { useContext } from "react";
-import WeekdayHeader from "./WeekdayHeader";
+import MonthNavigation from "./MonthNavigation";
 import MonthView from "./MonthView";
 import { CurrentMonthContext } from "../../context/CurrentMonthContext";
 import useHandleClickDate from "../../hooks/useHandleClickDate";
 import * as dayjs from "dayjs";
+import styled from "styled-components";
 
-const Calendar = () => {
+const Calendar = ({ numMonths = 1 }) => {
   const today: dayjs.Dayjs = dayjs();
   const { currentMonth, setCurrentMonth } = useContext(CurrentMonthContext);
   const handleChangeButton = (num: number) => {
@@ -15,10 +16,32 @@ const Calendar = () => {
 
   return (
     <div>
-      <WeekdayHeader today={today} handleChangeButton={handleChangeButton} />
-      <MonthView today={today} handleClickDate={handleClickDate} />
+      <MonthNavigation today={today} handleChangeButton={handleChangeButton} />
+      <CalendarContainer>
+        {Array.from({ length: numMonths }).map((_, index) => {
+          const month = ((currentMonth.month() + index) % 12) + 1;
+          const year =
+            currentMonth.year() +
+            Math.floor((currentMonth.month() + index) / 12);
+          return (
+            <MonthView
+              key={index}
+              today={today}
+              month={month}
+              year={year}
+              handleClickDate={handleClickDate}
+              // startFromMonday={true}
+            />
+          );
+        })}
+      </CalendarContainer>
     </div>
   );
 };
 
 export default Calendar;
+
+const CalendarContainer = styled.div`
+  display: flex;
+  overflow-x: auto;
+`;

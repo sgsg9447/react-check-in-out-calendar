@@ -1,32 +1,44 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { generateMonthCalendar } from "../../utils/dateUtils";
 import DateCell from "./DateCell";
-import { CurrentMonthContext } from "../../context/CurrentMonthContext";
 import * as dayjs from "dayjs";
 
 type MonthViewProps = {
   today: dayjs.Dayjs;
+  month: number;
+  year: number;
   handleClickDate: (date: dayjs.Dayjs) => void;
+  startFromMonday?: boolean;
 };
 
-const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
-
-const MonthView = ({ today, handleClickDate }: MonthViewProps) => {
+const MonthView = ({
+  today,
+  month,
+  year,
+  handleClickDate,
+  startFromMonday = false,
+}: MonthViewProps) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
-  const { currentMonth } = useContext(CurrentMonthContext);
-  const month = currentMonth.month() + 1;
-  const year = currentMonth.year();
+  const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+  const daysOfWeek = startFromMonday
+    ? DAYS_OF_WEEK.slice(1).concat(DAYS_OF_WEEK[0])
+    : DAYS_OF_WEEK;
 
   useEffect(() => {
-    setTotalDate(generateMonthCalendar(year, month));
-  }, [year, month]);
+    setTotalDate(generateMonthCalendar(year, month, startFromMonday));
+  }, [year, month, startFromMonday]);
 
   return (
     <Container>
+      <WeekdayHeaderContainer>
+        <WeekdayHeaderText>
+          {year}년 {month}월
+        </WeekdayHeaderText>
+      </WeekdayHeaderContainer>
       <BodyContentContainer>
         <Days>
-          {DAYS_OF_WEEK.map((elm, index) => (
+          {daysOfWeek.map((elm, index) => (
             <div key={index}>{elm}</div>
           ))}
         </Days>
@@ -54,7 +66,25 @@ export default MonthView;
 const Container = styled.div`
   width: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
 `;
+
+const WeekdayHeaderContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 5vh;
+  margin: 1.5rem 0;
+  position: relative;
+`;
+
+const WeekdayHeaderText = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+`;
+
 const BodyContentContainer = styled.div`
   margin: 20px;
 `;
