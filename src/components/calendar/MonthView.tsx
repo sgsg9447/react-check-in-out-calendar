@@ -10,6 +10,7 @@ type MonthViewProps = {
   year: number;
   handleClickDate: (date: dayjs.Dayjs) => void;
   startFromMonday?: boolean;
+  language?: "ko" | "en";
 };
 
 const MonthView = ({
@@ -17,10 +18,18 @@ const MonthView = ({
   month,
   year,
   handleClickDate,
-  startFromMonday = false,
+  startFromMonday,
+  language = "ko",
 }: MonthViewProps) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
-  const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+  let DAYS_OF_WEEK: string[];
+
+  if (language === "ko") {
+    DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+  } else {
+    DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  }
+
   const daysOfWeek = startFromMonday
     ? DAYS_OF_WEEK.slice(1).concat(DAYS_OF_WEEK[0])
     : DAYS_OF_WEEK;
@@ -32,9 +41,15 @@ const MonthView = ({
   return (
     <Container>
       <WeekdayHeaderContainer>
-        <WeekdayHeaderText>
-          {year}년 {month}월
-        </WeekdayHeaderText>
+        {language === "ko" ? (
+          <WeekdayHeaderText>
+            {year}년 {month}월
+          </WeekdayHeaderText>
+        ) : (
+          <WeekdayHeaderText>
+            {year}. {month}
+          </WeekdayHeaderText>
+        )}
       </WeekdayHeaderContainer>
       <BodyContentContainer>
         <Days>

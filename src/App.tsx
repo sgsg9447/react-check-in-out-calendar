@@ -1,24 +1,21 @@
-import "./App.css";
+import { ThemeProvider } from "styled-components";
 import Calendar from "./components/calendar";
 import { BookingDatesProvider } from "./context/BookingDatesContext";
 import { CurrentMonthProvider } from "./context/CurrentMonthContext";
-
-interface CalendarProps {
-  mainColor: string;
-  subMainColor: string;
-  startFromMonday?: boolean;
-  numMonths: number;
-}
+import GlobalStyle from "./styles/GlobalStyles";
 
 function App(props: CalendarProps) {
   return (
-    <>
+    <ThemeProvider
+      theme={{ mainColor: props.mainColor, subMainColor: props.subMainColor }}
+    >
+      <GlobalStyle />
       <CurrentMonthProvider>
         <BookingDatesProvider>
           <Calendar {...props} />
         </BookingDatesProvider>
       </CurrentMonthProvider>
-    </>
+    </ThemeProvider>
   );
 }
 
