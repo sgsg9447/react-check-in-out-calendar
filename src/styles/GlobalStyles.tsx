@@ -1,7 +1,12 @@
-import { createGlobalStyle } from "styled-components";
+import { DefaultTheme, createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 
-const GlobalStyle = createGlobalStyle`
+interface MyTheme extends DefaultTheme {
+  mainColor: string;
+  subMainColor: string;
+}
+
+const GlobalStyle = createGlobalStyle<{ theme: MyTheme }>`
 ${reset}
 
 *,
@@ -44,8 +49,8 @@ button {
     --color-white: #fff;
     --color-black: #0f0f0f;
     --color-light-gray: #D3D3D3;
-    --color-main: #ff375c;
-    --color-sub-main: #FEC0CA;
+    --color-main: ${(props) => props.theme.mainColor || "#ff375c"};
+    --color-sub-main: ${(props) => props.theme.subMainColor || "#FEC0CA"};
   }
 `;
 
