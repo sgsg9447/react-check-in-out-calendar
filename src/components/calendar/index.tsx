@@ -5,8 +5,13 @@ import { CurrentMonthContext } from "../../context/CurrentMonthContext";
 import useHandleClickDate from "../../hooks/useHandleClickDate";
 import * as dayjs from "dayjs";
 import styled from "styled-components";
+import BookingDatesView from "./BookingDatesView";
 
-const Calendar = ({ numMonths = 1 }) => {
+const Calendar = ({
+  numMonths = 2,
+  language = "ko",
+  startFromMonday = false,
+}: CalendarProps) => {
   const today: dayjs.Dayjs = dayjs();
   const { currentMonth, setCurrentMonth } = useContext(CurrentMonthContext);
   const handleChangeButton = (num: number) => {
@@ -16,6 +21,7 @@ const Calendar = ({ numMonths = 1 }) => {
 
   return (
     <div>
+      <BookingDatesView language={language} />
       <MonthNavigation today={today} handleChangeButton={handleChangeButton} />
       <CalendarContainer>
         {Array.from({ length: numMonths }).map((_, index) => {
@@ -30,7 +36,8 @@ const Calendar = ({ numMonths = 1 }) => {
               month={month}
               year={year}
               handleClickDate={handleClickDate}
-              // startFromMonday={true}
+              startFromMonday={startFromMonday}
+              language={language}
             />
           );
         })}
