@@ -1,8 +1,7 @@
 import { ThemeProvider } from "styled-components";
 import Calendar from "./components/calendar";
-import { BookingDatesProvider } from "./context/BookingDatesContext";
-import { CurrentMonthProvider } from "./context/CurrentMonthContext";
 import GlobalStyle from "./styles/GlobalStyles";
+import { CalendarProvider } from "./context/CalendarContext";
 
 function App(props: CalendarProps) {
   return (
@@ -10,11 +9,9 @@ function App(props: CalendarProps) {
       theme={{ mainColor: props.mainColor, subMainColor: props.subMainColor }}
     >
       <GlobalStyle />
-      <CurrentMonthProvider>
-        <BookingDatesProvider>
-          <Calendar {...props} />
-        </BookingDatesProvider>
-      </CurrentMonthProvider>
+      <CalendarProvider>
+        <Calendar {...props} />
+      </CalendarProvider>
     </ThemeProvider>
   );
 }

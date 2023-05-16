@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import dayjs from "dayjs";
 import { useContext } from "react";
-import { BookingDatesContext } from "../../context/BookingDatesContext";
+import { CalendarContext } from "../../context/CalendarContext";
 
 type DateCellProps = {
   today: dayjs.Dayjs;
@@ -22,7 +22,7 @@ const DateCell = ({
   handleClickDate,
 }: DateCellProps) => {
   const currentDate = dayjs(new Date(year, month - 1, date));
-  const { bookingDates } = useContext(BookingDatesContext);
+  const { bookingDates } = useContext(CalendarContext);
 
   // 날짜 문자열 변환
   const currentDateString = currentDate.format("YYYY-MM-DD");

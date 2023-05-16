@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { generateMonthCalendar } from "../../utils/dateUtils";
 import DateCell from "./DateCell";
 import * as dayjs from "dayjs";
-import { CurrentMonthContext } from "../../context/CurrentMonthContext";
 import { DAYS_OF_WEEK_EN, DAYS_OF_WEEK_KO } from "../../constants/daysOfWeek";
+import { CalendarContext } from "../../context/CalendarContext";
 
 type MonthViewProps = {
   today: dayjs.Dayjs;
@@ -23,7 +23,7 @@ const MonthView = ({
 }: MonthViewProps) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
   let DAYS_OF_WEEK: string[];
-  const { currentMonth } = useContext(CurrentMonthContext);
+  const { currentMonth } = useContext(CalendarContext);
   const [month, setMonth] = useState<number>(0);
   const [year, setYear] = useState<number>(0);
   useEffect(() => {
