@@ -4,4 +4,5 @@ interface CalendarProps {
   startDay?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   numMonths?: 1 | 2 | 3 | 4;
   language?: "ko" | "en";
+  onCheckInOutChange?: (checkInDate?: Date, checkOutDate?: Date) => void;
 }

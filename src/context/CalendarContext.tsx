@@ -18,6 +18,7 @@ type CalendarContextType = {
   >;
   calendarSettings: CalendarProps;
   setCalendarSettings: React.Dispatch<React.SetStateAction<CalendarProps>>;
+  onCheckInOutChange?: (checkInDate?: Date, checkOutDate?: Date) => void;
 };
 
 // 초기 컨텍스트 값을 설정합니다.
@@ -36,6 +37,7 @@ const initialContextValue: CalendarContextType = {
     startDay: 0,
   },
   setCalendarSettings: () => {},
+  onCheckInOutChange: () => {},
 };
 
 // 컨텍스트를 생성합니다.
@@ -44,11 +46,13 @@ const CalendarContext = createContext<CalendarContextType>(initialContextValue);
 type CalendarProviderProps = {
   children: ReactNode;
   calendarProps: CalendarProps;
+  onCheckInOutChange?: (checkInDate?: Date, checkOutDate?: Date) => void;
 };
 
 const CalendarProvider = ({
   children,
   calendarProps,
+  onCheckInOutChange,
 }: CalendarProviderProps) => {
   const [currentMonth, _setCurrentMonth] = useState<dayjs.Dayjs>(dayjs());
   const [bookingDates, setBookingDates] = useState<{
@@ -76,6 +80,15 @@ const CalendarProvider = ({
     }
   }, []);
 
+  useEffect(() => {
+    if (onCheckInOutChange) {
+      onCheckInOutChange(
+        bookingDates.checkIn?.toDate(),
+        bookingDates.checkOut?.toDate()
+      );
+    }
+  }, [bookingDates, onCheckInOutChange]);
+
   const value: CalendarContextType = {
     today: dayjs(),
     currentMonth,
@@ -84,6 +97,7 @@ const CalendarProvider = ({
     setBookingDates,
     calendarSettings,
     setCalendarSettings,
+    onCheckInOutChange,
   };
 
   return (
