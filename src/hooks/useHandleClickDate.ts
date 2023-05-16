@@ -37,7 +37,7 @@ const useHandleClickDate = (today: dayjs.Dayjs) => {
     }
   };
 
-  return handleClickDate;
+  return { handleClickDate };
 };
 
 export default useHandleClickDate;
