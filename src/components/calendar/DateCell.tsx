@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { useContext } from "react";
 import { CalendarContext } from "../../context/CalendarContext";
 import useHandleClickDate from "../../hooks/useHandleClickDate";
+import { DATE_FORMAT } from "../../constants/format";
 
 type DateCellProps = {
   date: number;
@@ -18,10 +19,10 @@ const DateCell = ({ date, month, year, isOtherDay }: DateCellProps) => {
   const handleClickDate = useHandleClickDate(today);
 
   // 날짜 문자열 변환
-  const currentDateString = currentDate.format("YYYY-MM-DD");
-  const todayDateString = today.format("YYYY-MM-DD");
-  const checkInDateString = bookingDates.checkIn?.format("YYYY-MM-DD");
-  const checkOutDateString = bookingDates.checkOut?.format("YYYY-MM-DD");
+  const currentDateString = currentDate.format(DATE_FORMAT);
+  const todayDateString = today.format(DATE_FORMAT);
+  const checkInDateString = bookingDates.checkIn?.format(DATE_FORMAT);
+  const checkOutDateString = bookingDates.checkOut?.format(DATE_FORMAT);
 
   // 선택된 날짜 및 범위 내 날짜 확인
   const isSelectedDate =

@@ -1,34 +1,47 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { CalendarContext } from "../../context/CalendarContext";
 
 const MonthNavigation = () => {
   const { today, currentMonth, setCurrentMonth } = useContext(CalendarContext);
-  const laterMonthDate = today.add(11, "month").toDate();
-  const isPrevButtonDisabled =
-    today.year() >= currentMonth.year() &&
-    today.month() >= currentMonth.month();
-  const isNextButtonDisabled =
-    laterMonthDate.getFullYear() <= currentMonth.year() &&
-    laterMonthDate.getMonth() <= currentMonth.month();
+  const laterMonthDate = useMemo(
+    () => today.add(11, "month").toDate(),
+    [today]
+  );
 
-  const handleChangeButton = (num: number) => {
-    setCurrentMonth(currentMonth.add(num, "month"));
+  const isPrevButtonDisabled = useMemo(
+    () =>
+      today.year() >= currentMonth.year() &&
+      today.month() >= currentMonth.month(),
+    [today, currentMonth]
+  );
+
+  const isNextButtonDisabled = useMemo(
+    () =>
+      laterMonthDate.getFullYear() <= currentMonth.year() &&
+      laterMonthDate.getMonth() <= currentMonth.month(),
+    [laterMonthDate, currentMonth]
+  );
+
+  const handleMonthChange = (num: number) => {
+    setCurrentMonth(num);
   };
 
   return (
     <Container>
       <ButtonContainer>
-        {isPrevButtonDisabled ? (
-          <div></div>
-        ) : (
-          <button onClick={() => handleChangeButton(-1)}>&lt;</button>
-        )}
-        {isNextButtonDisabled ? (
-          <div></div>
-        ) : (
-          <button onClick={() => handleChangeButton(1)}>&gt;</button>
-        )}
+        <Button
+          disabled={isPrevButtonDisabled}
+          onClick={() => handleMonthChange(-1)}
+        >
+          &lt;
+        </Button>
+        <Button
+          disabled={isNextButtonDisabled}
+          onClick={() => handleMonthChange(1)}
+        >
+          &gt;
+        </Button>
       </ButtonContainer>
     </Container>
   );
@@ -51,4 +64,8 @@ const ButtonContainer = styled.div`
   top: 35px;
   width: 100%;
   z-index: 10;
+`;
+
+const Button = styled.button`
+  ${(props) => (props.disabled ? "visibility: hidden;" : "")}
 `;

@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 // 주어진 연도(year)와 월(month)에 해당하는 달력을 출력하기 위해 필요한 날짜들을 계산하는 역할
 export const generateMonthCalendar = (
   year: number,
@@ -34,4 +36,11 @@ export const generateMonthCalendar = (
     return date;
   });
   return previousMonthDays.concat(days, nextMonthDays);
+};
+
+export const calculateNewDates = (currentMonth: dayjs.Dayjs, index: number) => {
+  const newMonth = ((currentMonth.month() + index) % 12) + 1;
+  const newYear =
+    currentMonth.year() + Math.floor((currentMonth.month() + index) / 12);
+  return { newMonth, newYear };
 };
