@@ -5,14 +5,11 @@ import * as dayjs from "dayjs";
 
 type MonthNavigationProps = {
   today: dayjs.Dayjs;
-  handleChangeButton: (num: number) => void;
 };
 
-const MonthNavigation = ({
-  today,
-  handleChangeButton,
-}: MonthNavigationProps) => {
-  const { currentMonth } = useContext(CurrentMonthContext);
+const MonthNavigation = ({ today }: MonthNavigationProps) => {
+  const { currentMonth, setCurrentMonth } = useContext(CurrentMonthContext);
+
   const laterMonthDate = today.add(11, "month").toDate();
   const isPrevButtonDisabled =
     today.year() >= currentMonth.year() &&
@@ -20,6 +17,10 @@ const MonthNavigation = ({
   const isNextButtonDisabled =
     laterMonthDate.getFullYear() <= currentMonth.year() &&
     laterMonthDate.getMonth() <= currentMonth.month();
+
+  const handleChangeButton = (num: number) => {
+    setCurrentMonth(currentMonth.add(num, "month"));
+  };
 
   return (
     <Container>
