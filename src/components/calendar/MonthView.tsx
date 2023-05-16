@@ -1,69 +1,59 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
-import { generateMonthCalendar } from "../../utils/dateUtils";
+import {
+  calculateNewDates,
+  generateMonthCalendar,
+} from "../../utils/dateUtils";
 import DateCell from "./DateCell";
 import { DAYS_OF_WEEK_EN, DAYS_OF_WEEK_KO } from "../../constants/daysOfWeek";
 import { CalendarContext } from "../../context/CalendarContext";
 
 const MonthView = ({ index }: { index: number }) => {
-  const [totalDate, setTotalDate] = useState<Date[]>([]);
-  const [month, setMonth] = useState<number>(0);
-  const [year, setYear] = useState<number>(0);
   const { currentMonth, calendarSettings } = useContext(CalendarContext);
   const { language = "ko", startDay = 0 } = calendarSettings;
-  let DAYS_OF_WEEK: string[];
-  
-  useEffect(() => {
-    const newMonth = ((currentMonth.month() + index) % 12) + 1;
-    const newYear =
-      currentMonth.year() + Math.floor((currentMonth.month() + index) / 12);
-    setMonth(newMonth);
-    setYear(newYear);
-  }, [currentMonth, index]);
+  const [dates, setDates] = useState(calculateNewDates(currentMonth, index));
 
-  if (language === "ko") {
-    DAYS_OF_WEEK = DAYS_OF_WEEK_KO;
-  } else {
-    DAYS_OF_WEEK = DAYS_OF_WEEK_EN;
-  }
-
-  const daysOfWeek = [
-    ...DAYS_OF_WEEK.slice(startDay),
-    ...DAYS_OF_WEEK.slice(0, startDay),
-  ];
+  const DAYS_OF_WEEK: string[] = useMemo(() => {
+    let daysOfWeek = language === "ko" ? DAYS_OF_WEEK_KO : DAYS_OF_WEEK_EN;
+    return [...daysOfWeek.slice(startDay), ...daysOfWeek.slice(0, startDay)];
+  }, [language, startDay]);
 
   useEffect(() => {
-    setTotalDate(generateMonthCalendar(year, month, startDay));
-  }, [year, month, startDay]);
+    setDates(calculateNewDates(currentMonth, index));
+  }, [currentMonth]);
+
+  const totalDate = useMemo(() => {
+    return generateMonthCalendar(dates.newYear, dates.newMonth, startDay);
+  }, [dates.newYear, dates.newMonth, startDay]);
 
   return (
     <Container>
       <WeekdayHeaderContainer>
         {language === "ko" ? (
           <WeekdayHeaderText>
-            {year}년 {month}월
+            {dates.newYear}년 {dates.newMonth}월
           </WeekdayHeaderText>
         ) : (
           <WeekdayHeaderText>
-            {year}. {month}
+            {dates.newYear}. {dates.newMonth}
           </WeekdayHeaderText>
         )}
       </WeekdayHeaderContainer>
       <BodyContentContainer>
         <Days>
-          {daysOfWeek.map((elm, index) => (
-            <div key={index}>{elm}</div>
+          {DAYS_OF_WEEK.map((elm) => (
+            <div key={elm}>{elm}</div>
           ))}
         </Days>
 
         <DatesContainer>
-          {totalDate.map((date, index) => (
+          {totalDate.map((date) => (
             <DateCell
-              key={index}
+              key={date.toString()}
               year={date.getFullYear()}
               month={date.getMonth() + 1}
               date={date.getDate()}
-              isOtherDay={date.getMonth() + 1 !== month}
+              isOtherDay={date.getMonth() + 1 !== dates.newMonth}
             />
           ))}
         </DatesContainer>
