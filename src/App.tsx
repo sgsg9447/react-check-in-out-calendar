@@ -4,12 +4,15 @@ import GlobalStyle from "./styles/GlobalStyles";
 import { CalendarProvider } from "./context/CalendarContext";
 
 function App(props: CalendarProps) {
-  const { mainColor, subMainColor } = props;
+  const { mainColor, subMainColor, onCheckInOutChange } = props;
 
   return (
     <ThemeProvider theme={{ mainColor, subMainColor }}>
       <GlobalStyle />
-      <CalendarProvider calendarProps={props}>
+      <CalendarProvider
+        calendarProps={props}
+        onCheckInOutChange={onCheckInOutChange}
+      >
         <Calendar />
       </CalendarProvider>
     </ThemeProvider>

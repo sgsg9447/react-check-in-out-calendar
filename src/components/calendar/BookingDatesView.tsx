@@ -2,6 +2,7 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { CalendarContext } from "../../context/CalendarContext";
 import { languageTextMap } from "../../constants/languages";
+import { DATE_FORMAT } from "../../constants/format";
 
 const BookingDatesView = ({ language = "ko" }: CalendarProps) => {
   const { bookingDates } = useContext(CalendarContext);
@@ -12,12 +13,12 @@ const BookingDatesView = ({ language = "ko" }: CalendarProps) => {
     <BookingDatesViewContainer>
       <BookingDatesViewBox>
         <BookingDatesTitle>
-          {checkInText} {bookingDates.checkIn?.format("YYYY-MM-DD")}
+          {checkInText} {bookingDates.checkIn?.format(DATE_FORMAT)}
         </BookingDatesTitle>
       </BookingDatesViewBox>
       <BookingDatesViewBox>
         <BookingDatesTitle>
-          {checkOutText} {bookingDates.checkOut?.format("YYYY-MM-DD")}
+          {checkOutText} {bookingDates.checkOut?.format(DATE_FORMAT)}
         </BookingDatesTitle>
       </BookingDatesViewBox>
     </BookingDatesViewContainer>

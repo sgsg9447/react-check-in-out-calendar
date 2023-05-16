@@ -7,7 +7,7 @@ import { CalendarContext } from "../../context/CalendarContext";
 
 const Calendar = () => {
   const { calendarSettings } = useContext(CalendarContext);
-  const { numMonths = 2, language = "ko" } = calendarSettings;
+  const { numMonths, language } = calendarSettings;
 
   return (
     <>
