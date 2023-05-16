@@ -2,24 +2,18 @@
 export const generateMonthCalendar = (
   year: number,
   month: number,
-  startFromMonday: boolean = false
+  startDay: number
 ): Date[] => {
   // 주어진 연도와 월의 1일을 나타내는 Date객체
   const startOfMonth = new Date(year, month - 1, 1);
   // 주어진 연도와 월의 마지막 날짜를 나타내는 Date객체
   const endOfMonth = new Date(year, month, 0);
   // 주어진 연도와 월의 1일이 해당하는 요일을 나타내는 정수
-  let startOfWeek = startOfMonth.getDay();
+  let startOfWeek = (7 + startOfMonth.getDay() - startDay) % 7;
   // 주어진 연도와 월의 마지막날이 해당하는 요일을 나타내는 정수
-  let endOfWeek = endOfMonth.getDay();
+  let endOfWeek = (7 + endOfMonth.getDay() - startDay) % 7;
 
-  if (startFromMonday) {
-    startOfWeek = startOfWeek === 0 ? 6 : startOfWeek - 1;
-    endOfWeek = endOfWeek === 0 ? 6 : endOfWeek - 1;
-  }
-  // 시작날짜
   const startDate = startOfMonth.getDate();
-  // 마지막날짜
   const endDate = endOfMonth.getDate();
   // year와 month에 해당하는 월의 일 수에 해당하는 날짜 객체들을 만드는 부분
   const days = Array.from({ length: endDate }, (_, i) => {

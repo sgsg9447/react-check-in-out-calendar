@@ -9,8 +9,8 @@ type MonthViewProps = {
   month: number;
   year: number;
   handleClickDate: (date: dayjs.Dayjs) => void;
-  startFromMonday?: boolean;
-  language?: "ko" | "en";
+  startDay?: CalendarProps["startDay"];
+  language?: CalendarProps["language"];
 };
 
 const MonthView = ({
@@ -18,8 +18,8 @@ const MonthView = ({
   month,
   year,
   handleClickDate,
-  startFromMonday,
   language = "ko",
+  startDay = 0,
 }: MonthViewProps) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
   let DAYS_OF_WEEK: string[];
@@ -30,13 +30,14 @@ const MonthView = ({
     DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   }
 
-  const daysOfWeek = startFromMonday
-    ? DAYS_OF_WEEK.slice(1).concat(DAYS_OF_WEEK[0])
-    : DAYS_OF_WEEK;
+  const daysOfWeek = [
+    ...DAYS_OF_WEEK.slice(startDay),
+    ...DAYS_OF_WEEK.slice(0, startDay),
+  ];
 
   useEffect(() => {
-    setTotalDate(generateMonthCalendar(year, month, startFromMonday));
-  }, [year, month, startFromMonday]);
+    setTotalDate(generateMonthCalendar(year, month, startDay));
+  }, [year, month, startDay]);
 
   return (
     <Container>

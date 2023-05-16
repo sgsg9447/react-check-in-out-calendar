@@ -10,7 +10,7 @@ import BookingDatesView from "./BookingDatesView";
 const Calendar = ({
   numMonths = 2,
   language = "ko",
-  startFromMonday = false,
+  startDay,
 }: CalendarProps) => {
   const today: dayjs.Dayjs = dayjs();
   const { currentMonth, setCurrentMonth } = useContext(CurrentMonthContext);
@@ -35,8 +35,8 @@ const Calendar = ({
               today={today}
               month={month}
               year={year}
+              startDay={startDay}
               handleClickDate={handleClickDate}
-              startFromMonday={startFromMonday}
               language={language}
             />
           );
