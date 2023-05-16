@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { BookingDatesContext } from "../../context/BookingDatesContext";
 import styled from "styled-components";
+import { CalendarContext } from "../../context/CalendarContext";
 
 const BookingDatesView = ({ language = "ko" }: CalendarProps) => {
-  const { bookingDates } = useContext(BookingDatesContext);
+  const { bookingDates } = useContext(CalendarContext);
   const checkInText = language === "ko" ? "체크인" : "Check-In";
   const checkOutText = language === "ko" ? "체크아웃" : "Check-Out";
 

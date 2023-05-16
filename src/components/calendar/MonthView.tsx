@@ -2,30 +2,17 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { generateMonthCalendar } from "../../utils/dateUtils";
 import DateCell from "./DateCell";
-import * as dayjs from "dayjs";
-import { CurrentMonthContext } from "../../context/CurrentMonthContext";
 import { DAYS_OF_WEEK_EN, DAYS_OF_WEEK_KO } from "../../constants/daysOfWeek";
+import { CalendarContext } from "../../context/CalendarContext";
 
-type MonthViewProps = {
-  today: dayjs.Dayjs;
-  index: number;
-  handleClickDate: (date: dayjs.Dayjs) => void;
-  startDay?: CalendarProps["startDay"];
-  language?: CalendarProps["language"];
-};
-
-const MonthView = ({
-  today,
-  index,
-  handleClickDate,
-  language = "ko",
-  startDay = 0,
-}: MonthViewProps) => {
+const MonthView = ({ index }: { index: number }) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
-  let DAYS_OF_WEEK: string[];
-  const { currentMonth } = useContext(CurrentMonthContext);
   const [month, setMonth] = useState<number>(0);
   const [year, setYear] = useState<number>(0);
+  const { currentMonth, calendarSettings } = useContext(CalendarContext);
+  const { language = "ko", startDay = 0 } = calendarSettings;
+  let DAYS_OF_WEEK: string[];
+  
   useEffect(() => {
     const newMonth = ((currentMonth.month() + index) % 12) + 1;
     const newYear =
@@ -77,8 +64,6 @@ const MonthView = ({
               month={date.getMonth() + 1}
               date={date.getDate()}
               isOtherDay={date.getMonth() + 1 !== month}
-              handleClickDate={handleClickDate}
-              today={today}
             />
           ))}
         </DatesContainer>
