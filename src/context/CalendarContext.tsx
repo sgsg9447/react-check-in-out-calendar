@@ -1,6 +1,12 @@
 import { createContext, useState, ReactNode, useEffect } from "react";
 import * as dayjs from "dayjs";
 
+const defaultProps: CalendarProps = {
+  startDay: 0,
+  numMonths: 2,
+  language: "ko",
+};
+
 // 컨텍스트에서 사용될 타입을 정의합니다.
 type CalendarContextType = {
   today: dayjs.Dayjs;
@@ -51,7 +57,7 @@ type CalendarProviderProps = {
 
 const CalendarProvider = ({
   children,
-  calendarProps,
+  calendarProps = defaultProps,
   onCheckInOutChange,
 }: CalendarProviderProps) => {
   const [currentMonth, _setCurrentMonth] = useState<dayjs.Dayjs>(dayjs());
@@ -66,8 +72,10 @@ const CalendarProvider = ({
   const setCurrentMonth = (num: number) => {
     _setCurrentMonth((prevMonth) => prevMonth.add(num, "month"));
   };
-  const [calendarSettings, setCalendarSettings] =
-    useState<CalendarProps>(calendarProps);
+  const [calendarSettings, setCalendarSettings] = useState<CalendarProps>({
+    ...defaultProps,
+    ...calendarProps,
+  });
 
   useEffect(() => {
     const periodData = localStorage.getItem("stayPeriod");
