@@ -25,16 +25,11 @@ const Calendar = ({
       <MonthNavigation today={today} handleChangeButton={handleChangeButton} />
       <CalendarContainer>
         {Array.from({ length: numMonths }).map((_, index) => {
-          const month = ((currentMonth.month() + index) % 12) + 1;
-          const year =
-            currentMonth.year() +
-            Math.floor((currentMonth.month() + index) / 12);
           return (
             <MonthView
               key={index}
               today={today}
-              month={month}
-              year={year}
+              index={index}
               startDay={startDay}
               handleClickDate={handleClickDate}
               language={language}

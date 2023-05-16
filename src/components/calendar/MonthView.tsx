@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { generateMonthCalendar } from "../../utils/dateUtils";
 import DateCell from "./DateCell";
 import * as dayjs from "dayjs";
+import { CurrentMonthContext } from "../../context/CurrentMonthContext";
+import { DAYS_OF_WEEK_EN, DAYS_OF_WEEK_KO } from "../../constants/daysOfWeek";
 
 type MonthViewProps = {
   today: dayjs.Dayjs;
-  month: number;
-  year: number;
+  index: number;
   handleClickDate: (date: dayjs.Dayjs) => void;
   startDay?: CalendarProps["startDay"];
   language?: CalendarProps["language"];
@@ -15,19 +16,28 @@ type MonthViewProps = {
 
 const MonthView = ({
   today,
-  month,
-  year,
+  index,
   handleClickDate,
   language = "ko",
   startDay = 0,
 }: MonthViewProps) => {
   const [totalDate, setTotalDate] = useState<Date[]>([]);
   let DAYS_OF_WEEK: string[];
+  const { currentMonth } = useContext(CurrentMonthContext);
+  const [month, setMonth] = useState<number>(0);
+  const [year, setYear] = useState<number>(0);
+  useEffect(() => {
+    const newMonth = ((currentMonth.month() + index) % 12) + 1;
+    const newYear =
+      currentMonth.year() + Math.floor((currentMonth.month() + index) / 12);
+    setMonth(newMonth);
+    setYear(newYear);
+  }, [currentMonth, index]);
 
   if (language === "ko") {
-    DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+    DAYS_OF_WEEK = DAYS_OF_WEEK_KO;
   } else {
-    DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    DAYS_OF_WEEK = DAYS_OF_WEEK_EN;
   }
 
   const daysOfWeek = [
