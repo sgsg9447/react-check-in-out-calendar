@@ -1,15 +1,9 @@
 import styled from "styled-components";
 import { useContext } from "react";
-import * as dayjs from "dayjs";
 import { CalendarContext } from "../../context/CalendarContext";
 
-type MonthNavigationProps = {
-  today: dayjs.Dayjs;
-};
-
-const MonthNavigation = ({ today }: MonthNavigationProps) => {
-  const { currentMonth, setCurrentMonth } = useContext(CalendarContext);
-
+const MonthNavigation = () => {
+  const { today, currentMonth, setCurrentMonth } = useContext(CalendarContext);
   const laterMonthDate = today.add(11, "month").toDate();
   const isPrevButtonDisabled =
     today.year() >= currentMonth.year() &&

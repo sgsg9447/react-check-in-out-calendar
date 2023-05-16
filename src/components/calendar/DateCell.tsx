@@ -2,27 +2,20 @@ import styled, { css } from "styled-components";
 import dayjs from "dayjs";
 import { useContext } from "react";
 import { CalendarContext } from "../../context/CalendarContext";
+import useHandleClickDate from "../../hooks/useHandleClickDate";
 
 type DateCellProps = {
-  today: dayjs.Dayjs;
   date: number;
   month: number;
   year: number;
   isOtherDay: boolean;
-  handleClickDate: (date: dayjs.Dayjs) => void;
 };
 // 주어진 날짜가 선택된 체크인 또는 체크아웃 날짜와 일치하는지 확인하는 함수입니다.
 
-const DateCell = ({
-  today,
-  date,
-  month,
-  year,
-  isOtherDay,
-  handleClickDate,
-}: DateCellProps) => {
+const DateCell = ({ date, month, year, isOtherDay }: DateCellProps) => {
+  const { bookingDates, today } = useContext(CalendarContext);
   const currentDate = dayjs(new Date(year, month - 1, date));
-  const { bookingDates } = useContext(CalendarContext);
+  const handleClickDate = useHandleClickDate(today);
 
   // 날짜 문자열 변환
   const currentDateString = currentDate.format("YYYY-MM-DD");

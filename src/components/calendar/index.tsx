@@ -1,37 +1,24 @@
 import MonthNavigation from "./MonthNavigation";
 import MonthView from "./MonthView";
-import useHandleClickDate from "../../hooks/useHandleClickDate";
-import * as dayjs from "dayjs";
 import styled from "styled-components";
 import BookingDatesView from "./BookingDatesView";
+import { useContext } from "react";
+import { CalendarContext } from "../../context/CalendarContext";
 
-const Calendar = ({
-  numMonths = 2,
-  language = "ko",
-  startDay,
-}: CalendarProps) => {
-  const today: dayjs.Dayjs = dayjs();
-  const handleClickDate = useHandleClickDate(today);
+const Calendar = () => {
+  const { calendarSettings } = useContext(CalendarContext);
+  const { numMonths = 2, language = "ko" } = calendarSettings;
 
   return (
-    <div>
+    <>
       <BookingDatesView language={language} />
-      <MonthNavigation today={today} />
+      <MonthNavigation />
       <CalendarContainer>
         {Array.from({ length: numMonths }).map((_, index) => {
-          return (
-            <MonthView
-              key={index}
-              today={today}
-              index={index}
-              startDay={startDay}
-              handleClickDate={handleClickDate}
-              language={language}
-            />
-          );
+          return <MonthView key={index} index={index} />;
         })}
       </CalendarContainer>
-    </div>
+    </>
   );
 };
 

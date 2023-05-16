@@ -1,8 +1,9 @@
-import React, { createContext, useState, ReactNode, useEffect } from "react";
+import { createContext, useState, ReactNode, useEffect } from "react";
 import * as dayjs from "dayjs";
 
 // 컨텍스트에서 사용될 타입을 정의합니다.
 type CalendarContextType = {
+  today: dayjs.Dayjs;
   currentMonth: dayjs.Dayjs;
   setCurrentMonth: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
   bookingDates: {
@@ -15,10 +16,13 @@ type CalendarContextType = {
       checkOut?: dayjs.Dayjs;
     }>
   >;
+  calendarSettings: CalendarProps;
+  setCalendarSettings: React.Dispatch<React.SetStateAction<CalendarProps>>;
 };
 
 // 초기 컨텍스트 값을 설정합니다.
 const initialContextValue: CalendarContextType = {
+  today: dayjs(),
   currentMonth: dayjs(),
   setCurrentMonth: () => {},
   bookingDates: {
@@ -26,6 +30,12 @@ const initialContextValue: CalendarContextType = {
     checkOut: undefined,
   },
   setBookingDates: () => {},
+  calendarSettings: {
+    numMonths: 2,
+    language: "ko",
+    startDay: 0,
+  },
+  setCalendarSettings: () => {},
 };
 
 // 컨텍스트를 생성합니다.
@@ -33,9 +43,13 @@ const CalendarContext = createContext<CalendarContextType>(initialContextValue);
 
 type CalendarProviderProps = {
   children: ReactNode;
+  calendarProps: CalendarProps;
 };
 
-const CalendarProvider = ({ children }: CalendarProviderProps) => {
+const CalendarProvider = ({
+  children,
+  calendarProps,
+}: CalendarProviderProps) => {
   const [currentMonth, setCurrentMonth] = useState<dayjs.Dayjs>(dayjs());
   const [bookingDates, setBookingDates] = useState<{
     checkIn?: dayjs.Dayjs;
@@ -44,6 +58,9 @@ const CalendarProvider = ({ children }: CalendarProviderProps) => {
     checkIn: dayjs().add(7, "day"),
     checkOut: dayjs().add(8, "day"),
   });
+
+  const [calendarSettings, setCalendarSettings] =
+    useState<CalendarProps>(calendarProps);
 
   useEffect(() => {
     const periodData = localStorage.getItem("stayPeriod");
@@ -56,11 +73,14 @@ const CalendarProvider = ({ children }: CalendarProviderProps) => {
     }
   }, []);
 
-  const value = {
+  const value: CalendarContextType = {
+    today: dayjs(),
     currentMonth,
     setCurrentMonth,
     bookingDates,
     setBookingDates,
+    calendarSettings,
+    setCalendarSettings,
   };
 
   return (
