@@ -3,6 +3,7 @@
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
+    "outDir": "dist",
     "skipLibCheck": true,
 
     /* Bundler mode */
