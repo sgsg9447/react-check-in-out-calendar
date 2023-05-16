@@ -5,7 +5,7 @@ import * as dayjs from "dayjs";
 type CalendarContextType = {
   today: dayjs.Dayjs;
   currentMonth: dayjs.Dayjs;
-  setCurrentMonth: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
+  setCurrentMonth: (num: number) => void;
   bookingDates: {
     checkIn?: dayjs.Dayjs;
     checkOut?: dayjs.Dayjs;
@@ -50,7 +50,7 @@ const CalendarProvider = ({
   children,
   calendarProps,
 }: CalendarProviderProps) => {
-  const [currentMonth, setCurrentMonth] = useState<dayjs.Dayjs>(dayjs());
+  const [currentMonth, _setCurrentMonth] = useState<dayjs.Dayjs>(dayjs());
   const [bookingDates, setBookingDates] = useState<{
     checkIn?: dayjs.Dayjs;
     checkOut?: dayjs.Dayjs;
@@ -59,6 +59,9 @@ const CalendarProvider = ({
     checkOut: dayjs().add(8, "day"),
   });
 
+  const setCurrentMonth = (num: number) => {
+    _setCurrentMonth((prevMonth) => prevMonth.add(num, "month"));
+  };
   const [calendarSettings, setCalendarSettings] =
     useState<CalendarProps>(calendarProps);
 
