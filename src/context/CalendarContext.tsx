@@ -1,5 +1,5 @@
 import { createContext, useState, ReactNode, useEffect } from "react";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 
 const defaultProps: CalendarProps = {
   startDay: 0,

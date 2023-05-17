@@ -14,12 +14,9 @@ const Calendar = () => {
       <BookingDatesView language={language} />
       <MonthNavigation />
       <CalendarContainer>
-        {[...Array(numMonths)].map((_, index) => {
-          const date = new Date();
-          date.setMonth(date.getMonth() + index);
-          const key = `${date.getFullYear()}-${date.getMonth() + 1}}`;
-          return <MonthView key={key} index={index} />;
-        })}
+        {[...Array(numMonths)].map((_, index) => (
+          <MonthView key={index} index={index} />
+        ))}
       </CalendarContainer>
     </>
   );
