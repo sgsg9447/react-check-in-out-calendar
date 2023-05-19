@@ -6,6 +6,7 @@ const defaultProps: CalendarProps = {
   startDay: 0,
   numMonths: 2,
   language: "en",
+  range: 12,
 };
 
 // 컨텍스트에서 사용될 타입을 정의합니다.
@@ -42,6 +43,7 @@ const initialContextValue: CalendarContextType = {
     numMonths: 2,
     language: "en",
     startDay: 0,
+    range: 12,
   },
   setCalendarSettings: () => {},
   onCheckInOutChange: () => {},

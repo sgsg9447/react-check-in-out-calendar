@@ -3,10 +3,12 @@ import { useContext, useMemo } from "react";
 import { CalendarContext } from "../../context/CalendarContext";
 
 const MonthNavigation = () => {
-  const { today, currentMonth, setCurrentMonth } = useContext(CalendarContext);
+  const { today, currentMonth, setCurrentMonth, calendarSettings } =
+    useContext(CalendarContext);
+  const { range = 12 } = calendarSettings;
   const laterMonthDate = useMemo(
-    () => today.add(11, "month").toDate(),
-    [today]
+    () => today.add(range - 1, "month").toDate(),
+    [today, range]
   );
 
   const isPrevButtonDisabled = useMemo(
