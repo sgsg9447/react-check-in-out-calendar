@@ -5,10 +5,10 @@ import { CalendarContext } from "../../context/CalendarContext";
 const MonthNavigation = () => {
   const { today, currentMonth, setCurrentMonth, calendarSettings } =
     useContext(CalendarContext);
-  const { range = 12 } = calendarSettings;
+  const { maximumMonths = 12 } = calendarSettings;
   const laterMonthDate = useMemo(
-    () => today.add(range - 1, "month").toDate(),
-    [today, range]
+    () => today.add(maximumMonths - 1, "month").toDate(),
+    [today, maximumMonths]
   );
 
   const isPrevButtonDisabled = useMemo(

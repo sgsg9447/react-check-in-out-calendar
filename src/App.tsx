@@ -12,7 +12,9 @@ import { CalendarProps } from "./types";
  * @property {0|1|2|3|4|5|6} [startDay] - The start day of the week. (optional)
  * @property {1|2|3|4} [numMonths] - The number of months to be shown. (optional)
  * @property {"ko"|"en"} [language] - The language for the calendar. (optional)
- * @property {number} [range] - The range for the calendar. the default range will be 12 months. (optional)
+ * @property {number} [maximumMonths] - The maximum number of months that the calendar can display. (optional)
+ * @property {string | Dayjs} [defaultCheckIn] - "YYYY-MM-DD" (optional)
+ * @property {string | Dayjs} [defaultCheckOut] - "YYYY-MM-DD" (optional)
  * @property {function} [onCheckInOutChange] - Callback function when check-in or check-out date changes. (optional)
  */
 

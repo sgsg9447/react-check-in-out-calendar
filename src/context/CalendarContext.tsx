@@ -6,7 +6,7 @@ const defaultProps: CalendarProps = {
   startDay: 0,
   numMonths: 2,
   language: "en",
-  range: 12,
+  maximumMonths: 12,
 };
 
 // 컨텍스트에서 사용될 타입을 정의합니다.
@@ -43,7 +43,9 @@ const initialContextValue: CalendarContextType = {
     numMonths: 2,
     language: "en",
     startDay: 0,
-    range: 12,
+    maximumMonths: 12,
+    defaultCheckIn: dayjs().add(7, "day"),
+    defaultCheckOut: dayjs().add(8, "day"),
   },
   setCalendarSettings: () => {},
   onCheckInOutChange: () => {},
@@ -68,8 +70,14 @@ const CalendarProvider = ({
     checkIn?: dayjs.Dayjs;
     checkOut?: dayjs.Dayjs;
   }>({
-    checkIn: dayjs().add(7, "day"),
-    checkOut: dayjs().add(8, "day"),
+    checkIn: calendarProps.defaultCheckIn
+      ? dayjs(calendarProps.defaultCheckIn)
+      : dayjs().add(7, "day"),
+    checkOut: calendarProps.defaultCheckOut
+      ? dayjs(calendarProps.defaultCheckOut)
+      : calendarProps.defaultCheckIn
+      ? dayjs(calendarProps.defaultCheckIn).add(1, "day")
+      : dayjs().add(8, "day"),
   });
 
   const setCurrentMonth = (num: number) => {
