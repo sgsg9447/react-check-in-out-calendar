@@ -10,7 +10,7 @@ import { CalendarContext } from "../../context/CalendarContext";
 
 const MonthView = ({ index }: { index: number }) => {
   const { currentMonth, calendarSettings } = useContext(CalendarContext);
-  const { language = "ko", startDay = 0 } = calendarSettings;
+  const { language = "en", startDay = 0 } = calendarSettings;
   const [dates, setDates] = useState(calculateNewDates(currentMonth, index));
 
   const DAYS_OF_WEEK: string[] = useMemo(() => {

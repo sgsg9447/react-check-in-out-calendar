@@ -1,10 +1,11 @@
 import { createContext, useState, ReactNode, useEffect } from "react";
 import dayjs from "dayjs";
+import { CalendarProps } from "../types";
 
 const defaultProps: CalendarProps = {
   startDay: 0,
   numMonths: 2,
-  language: "ko",
+  language: "en",
 };
 
 // 컨텍스트에서 사용될 타입을 정의합니다.
@@ -39,7 +40,7 @@ const initialContextValue: CalendarContextType = {
   setBookingDates: () => {},
   calendarSettings: {
     numMonths: 2,
-    language: "ko",
+    language: "en",
     startDay: 0,
   },
   setCalendarSettings: () => {},
