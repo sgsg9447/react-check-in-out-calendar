@@ -7,11 +7,11 @@ import { CalendarContext } from "../../context/CalendarContext";
 
 const Calendar = () => {
   const { calendarSettings } = useContext(CalendarContext);
-  const { numMonths, language } = calendarSettings;
+  const { numMonths } = calendarSettings;
 
   return (
     <>
-      <BookingDatesView language={language} />
+      <BookingDatesView />
       <MonthNavigation />
       <CalendarContainer>
         {[...Array(numMonths)].map((_, index) => (

@@ -1,8 +1,9 @@
 {
   "name": "react-check-in-out-calendar",
-  "version": "0.0.3",
+  "version": "0.0.18",
   "type": "module",
-  "main": "dist/react-check-in-out-calendar.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
@@ -10,9 +11,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:types": "tsc --emitDeclarationOnly",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "prepare": "npm run build"
+    "prepare": "npm run build && npm run build:types"
   },
   "peerDependencies": {
     "react": "^18.2.0",
@@ -43,6 +45,7 @@
     "@types/styled-components": "^5.1.26",
     "dayjs": "^1.11.7",
     "styled-components": "^5.3.10",
-    "styled-reset": "^4.4.6"
+    "styled-reset": "^4.4.6",
+    "vite-plugin-dts": "^2.3.0"
   }
 }
