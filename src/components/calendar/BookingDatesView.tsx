@@ -1,13 +1,13 @@
-import { useContext } from "react";
-import styled from "styled-components";
-import { CalendarContext } from "../../context/CalendarContext";
-import { languageTextMap } from "../../constants/languages";
-import { DATE_FORMAT } from "../../constants/format";
+import { useContext } from 'react'
+import styled from 'styled-components'
+import { CalendarContext } from '../../context/CalendarContext'
+import { languageTextMap } from '../../constants/languages'
+import { DATE_FORMAT } from '../../constants/format'
+import { CalendarProps } from '../../type'
 
-const BookingDatesView = ({ language = "ko" }: CalendarProps) => {
-  const { bookingDates } = useContext(CalendarContext);
-  const { checkIn: checkInText, checkOut: checkOutText } =
-    languageTextMap[language];
+const BookingDatesView = ({ language = 'ko' }: CalendarProps) => {
+  const { bookingDates } = useContext(CalendarContext)
+  const { checkIn: checkInText, checkOut: checkOutText } = languageTextMap[language]
 
   return (
     <BookingDatesViewContainer>
@@ -22,18 +22,18 @@ const BookingDatesView = ({ language = "ko" }: CalendarProps) => {
         </BookingDatesTitle>
       </BookingDatesViewBox>
     </BookingDatesViewContainer>
-  );
-};
+  )
+}
 
-export default BookingDatesView;
+export default BookingDatesView
 
 const BookingDatesViewContainer = styled.div`
   display: flex;
   overflow-x: auto;
   gap: 30px;
-`;
+`
 const BookingDatesViewBox = styled.div`
   padding: 20px;
-`;
+`
 
-const BookingDatesTitle = styled.p``;
+const BookingDatesTitle = styled.p``

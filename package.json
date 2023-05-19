@@ -4,8 +4,7 @@
   "type": "module",
   "main": "dist/react-check-in-out-calendar.js",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "dev": "vite",
@@ -35,7 +34,8 @@
     "styled-components": "^5.3.10",
     "styled-reset": "^4.4.6",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "vite": "^4.3.2",
+    "vite-plugin-dts": "^2.3.0"
   },
   "dependencies": {
     "@types/react": "^18.0.28",
