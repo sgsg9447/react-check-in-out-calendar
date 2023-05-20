@@ -1,0 +1,63 @@
+{
+  "name": "react-check-in-out-calendar",
+  "version": "0.0.23",
+  "description": "React Check-In/Out Calendar is a customizable calendar component for React applications, built with TypeScript. It provides a user-friendly interface to select check-in and check-out dates for various booking or reservation systems.",
+  "keywords": [
+    "calendar",
+    "check-in",
+    "check-out",
+    "date-picker",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sgsg9447/react-check-in-out-calendar.git"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:types": "tsc --emitDeclarationOnly",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "prepare": "npm run build && npm run build:types"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.1.7",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "@vitejs/plugin-react": "^4.0.0",
+    "dayjs": "^1.11.7",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.3.10",
+    "styled-reset": "^4.4.6",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.2"
+  },
+  "dependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@types/styled-components": "^5.1.26",
+    "dayjs": "^1.11.7",
+    "styled-components": "^5.3.10",
+    "styled-reset": "^4.4.6",
+    "vite-plugin-dts": "^2.3.0"
+  }
+}
