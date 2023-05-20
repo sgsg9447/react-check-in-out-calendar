@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { CalendarContext } from "../../context/CalendarContext";
 import { languageTextMap } from "../../constants/languages";
 import { DATE_FORMAT } from "../../constants/format";
-import { CalendarProps } from "../../types";
 
 const BookingDatesView = () => {
   const { bookingDates, calendarSettings } = useContext(CalendarContext);

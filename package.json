@@ -1,6 +1,6 @@
 {
   "name": "react-check-in-out-calendar",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

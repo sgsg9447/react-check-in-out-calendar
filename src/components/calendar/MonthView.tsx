@@ -26,6 +26,10 @@ const MonthView = ({ index }: { index: number }) => {
     return generateMonthCalendar(dates.newYear, dates.newMonth, startDay);
   }, [dates.newYear, dates.newMonth, startDay]);
 
+  const lastDayOfMonth = useMemo(() => {
+    return new Date(dates.newYear, dates.newMonth, 0).getDate();
+  }, [dates.newYear, dates.newMonth]);
+
   return (
     <Container>
       <WeekdayHeaderContainer>
@@ -54,6 +58,7 @@ const MonthView = ({ index }: { index: number }) => {
               month={date.getMonth() + 1}
               date={date.getDate()}
               isOtherDay={date.getMonth() + 1 !== dates.newMonth}
+              lastDayOfMonth={lastDayOfMonth}
             />
           ))}
         </DatesContainer>
