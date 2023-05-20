@@ -10,10 +10,17 @@ type DateCellProps = {
   month: number;
   year: number;
   isOtherDay: boolean;
+  lastDayOfMonth: number;
 };
 // 주어진 날짜가 선택된 체크인 또는 체크아웃 날짜와 일치하는지 확인하는 함수입니다.
 
-const DateCell = ({ date, month, year, isOtherDay }: DateCellProps) => {
+const DateCell = ({
+  date,
+  month,
+  year,
+  isOtherDay,
+  lastDayOfMonth,
+}: DateCellProps) => {
   const { bookingDates, today } = useContext(CalendarContext);
   const currentDate = dayjs(new Date(year, month - 1, date));
   const { handleClickDate } = useHandleClickDate(today);
@@ -23,6 +30,8 @@ const DateCell = ({ date, month, year, isOtherDay }: DateCellProps) => {
   const todayDateString = today.format(DATE_FORMAT);
   const checkInDateString = bookingDates.checkIn?.format(DATE_FORMAT);
   const checkOutDateString = bookingDates.checkOut?.format(DATE_FORMAT);
+
+  const isAfterLastDay = date > lastDayOfMonth;
 
   // 선택된 날짜 및 범위 내 날짜 확인
   const isSelectedDate =
@@ -37,8 +46,14 @@ const DateCell = ({ date, month, year, isOtherDay }: DateCellProps) => {
     checkInDateString < currentDateString &&
     currentDateString < checkOutDateString;
 
+  const handleClickDateWrapper = () => {
+    if (!isAfterLastDay && !isOtherDay) {
+      handleClickDate(currentDate);
+    }
+  };
+
   return (
-    <DatesContainer onClick={() => handleClickDate(currentDate)}>
+    <DatesContainer onClick={handleClickDateWrapper}>
       {isSelectedDate && <Highlighting />}
       {isWithinRange && <MiddleHighlighting />}
       {currentDateString === todayDateString && (
