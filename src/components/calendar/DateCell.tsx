@@ -21,7 +21,8 @@ const DateCell = ({
   isOtherDay,
   lastDayOfMonth,
 }: DateCellProps) => {
-  const { bookingDates, today } = useContext(CalendarContext);
+  const { bookingDates, today, calendarSettings } = useContext(CalendarContext);
+  const { isRectangular } = calendarSettings;
   const currentDate = dayjs(new Date(year, month - 1, date));
   const { handleClickDate } = useHandleClickDate(today);
 
@@ -32,7 +33,6 @@ const DateCell = ({
   const checkOutDateString = bookingDates.checkOut?.format(DATE_FORMAT);
 
   const isAfterLastDay = date > lastDayOfMonth;
-
   // 선택된 날짜 및 범위 내 날짜 확인
   const isSelectedDate =
     !isOtherDay &&
@@ -54,8 +54,8 @@ const DateCell = ({
 
   return (
     <DatesContainer onClick={handleClickDateWrapper}>
-      {isSelectedDate && <Highlighting />}
-      {isWithinRange && <MiddleHighlighting />}
+      {isSelectedDate && <Highlighting isRectangular={isRectangular} />}
+      {isWithinRange && <MiddleHighlighting isRectangular={isRectangular} />}
       {currentDateString === todayDateString && (
         <TodayDot isHighlighting={isSelectedDate} />
       )}
@@ -64,6 +64,7 @@ const DateCell = ({
         isBeforeToday={currentDateString < todayDateString}
         isOtherDay={isOtherDay}
         isHighlighting={isSelectedDate}
+        isRectangular={isRectangular}
       >
         {date}
       </DateNum>
@@ -96,6 +97,7 @@ const DateNum = styled.div<{
   isHighlighting?: boolean;
   isOtherDay: boolean;
   isBeforeToday: boolean;
+  isRectangular?: boolean;
 }>`
   display: ${(props) => (props.isOtherDay ? "none" : "block")};
 
@@ -114,7 +116,8 @@ const DateNum = styled.div<{
         props.isBeforeToday
           ? "var(--color-white)"
           : "3px solid var(--color-main)"};
-      border-radius: 50%;
+      border-radius: ${(props) => (props.isRectangular ? "4px" : "50%")};
+
       width: 40px;
       height: 40px;
       ${centered}
@@ -124,19 +127,25 @@ const DateNum = styled.div<{
   z-index: 10;
 `;
 
-const Highlighting = styled.div`
+const Highlighting = styled.div<{ isRectangular?: boolean }>`
   border: 3px solid var(--color-main);
   background-color: var(--color-main);
-  border-radius: 50%;
+  border-radius: ${(props) =>
+    props.isRectangular
+      ? "4px"
+      : "50%"}; // isRectangular prop에 따라 사각형 또는 원형 표시
   width: 40px;
   height: 40px;
   ${centered}
 `;
-const MiddleHighlighting = styled.div`
+const MiddleHighlighting = styled.div<{ isRectangular?: boolean }>`
   width: 40px;
   height: 40px;
   ${centered}
-  border-radius: 50%;
+  border-radius: ${(props) =>
+    props.isRectangular
+      ? "4px"
+      : "50%"}; // isRectangular prop에 따라 사각형 또는 원형 표시
   background-color: var(--color-sub-main);
 `;
 

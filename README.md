@@ -15,6 +15,7 @@ Or with yarn:
 ```
 yarn add react-check-in-out-calendar
 ```
+
 ## Props
 
 | Prop Name          | Type                                              | Description                                                                       | Default                 |
@@ -27,6 +28,7 @@ yarn add react-check-in-out-calendar
 | maximumMonths      | number                                            | The maximum number of months that the calendar can display. (i.e 12, 24, 36, ...) | 12                      |
 | defaultCheckIn     | string \| Dayjs                                   | The check-in date in "YYYY-MM-DD" format.                                         | 7 days from current day |
 | defaultCheckOut    | string \| Dayjs                                   | The check-out date in "YYYY-MM-DD" format.                                        | 8 days from current day |
+| isRectangular      | boolean                                           | Determines if the date cells should be displayed as rectangles instead of circles | false                   |
 | onCheckInOutChange | (checkInDate?: Date, checkOutDate?: Date) => void | Callback function when check-in or check-out date changes.                        |                         |
 
 ## Usage
@@ -45,6 +47,7 @@ function App() {
       maximumMonths={12}
       defaultCheckIn="2023-06-01"
       defaultCheckOut="2023-06-15"
+      isRectangular={true}
       onCheckInOutChange={(checkInDate, checkOutDate) => {
         console.log("Check-in: ", checkInDate, " Check-out: ", checkOutDate);
       }}
@@ -60,6 +63,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ## License
 
 The MIT License.
+
 ## Contact
 
 If you have any questions or suggestions, please feel free to contact me. I'm always open to improving this package and would love to hear any ideas or solve any issues you may have.
