@@ -20,5 +20,6 @@ export interface CalendarProps {
    */
   defaultCheckOut?: string | Dayjs;
   showBookingDatesView?: boolean;
+  isRectangular?: boolean;
   onCheckInOutChange?: (checkInDate?: Date, checkOutDate?: Date) => void;
 }
