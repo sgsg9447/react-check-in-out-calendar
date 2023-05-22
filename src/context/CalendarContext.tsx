@@ -9,6 +9,7 @@ const defaultProps: CalendarProps = {
   maximumMonths: 12,
   showBookingDatesView: true,
   isRectangular: false,
+  resetStyle: false,
 };
 
 // 컨텍스트에서 사용될 타입을 정의합니다.
@@ -50,6 +51,7 @@ const initialContextValue: CalendarContextType = {
     defaultCheckOut: dayjs().add(8, "day"),
     showBookingDatesView: true,
     isRectangular: false,
+    resetStyle: false,
   },
   setCalendarSettings: () => {},
   onCheckInOutChange: () => {},
