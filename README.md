@@ -64,6 +64,15 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 The MIT License.
 
+## Planned Updates
+
+Custom Styling: We are working on resetting the default styles of the calendar component to provide more flexibility for customization. Soon, users will be able to apply their own styling by providing custom class names and overriding the default styles.
+
+Core Library and UI Library Separation: We are also planning to separate the core functionality of the calendar from the UI components. This will allow users to use their preferred UI libraries or build their own UI components while still leveraging the calendar's powerful date manipulation capabilities.
+
+Stay tuned for these upcoming updates, and feel free to reach out with any questions or suggestions you may have.
+
+
 ## Contact
 
 If you have any questions or suggestions, please feel free to contact me. I'm always open to improving this package and would love to hear any ideas or solve any issues you may have.
