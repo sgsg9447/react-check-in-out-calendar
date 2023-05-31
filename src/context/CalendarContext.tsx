@@ -15,6 +15,7 @@ const defaultProps: CalendarProps = {
   maximumMonths: 12,
   showBookingDatesView: true,
   isRectangular: false,
+  resetStyle: false,
   defaultCheckIn: dayjs().add(7, "day"),
   defaultCheckOut: dayjs().add(8, "day"),
 };
