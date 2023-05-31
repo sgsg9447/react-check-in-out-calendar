@@ -1,5 +1,5 @@
 import MonthNavigation from "./MonthNavigation";
-import MonthView from "./MonthView";
+import MonthView from "./month";
 import styled from "styled-components";
 import BookingDatesView from "./BookingDatesView";
 import { useContext } from "react";
@@ -16,7 +16,7 @@ const Calendar = () => {
       <MonthNavigation />
       <CalendarContainer>
         {[...Array(numMonths)].map((_, index) => (
-          <MonthView key={index} index={index} />
+          <MonthView key={`month-view-${index}`} index={index} />
         ))}
       </CalendarContainer>
     </>
