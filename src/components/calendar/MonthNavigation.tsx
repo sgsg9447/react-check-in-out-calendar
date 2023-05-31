@@ -1,33 +1,31 @@
 import styled from "styled-components";
-import { useContext, useMemo } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { CalendarContext } from "../../context/CalendarContext";
 
 const MonthNavigation = () => {
   const { today, currentMonth, setCurrentMonth, calendarSettings } =
     useContext(CalendarContext);
   const { maximumMonths = 12 } = calendarSettings;
+
   const laterMonthDate = useMemo(
     () => today.add(maximumMonths - 1, "month").toDate(),
     [today, maximumMonths]
   );
 
-  const isPrevButtonDisabled = useMemo(
-    () =>
-      today.year() >= currentMonth.year() &&
-      today.month() >= currentMonth.month(),
-    [today, currentMonth]
-  );
+  const isPrevButtonDisabled =
+    today.year() >= currentMonth.year() &&
+    today.month() >= currentMonth.month();
 
-  const isNextButtonDisabled = useMemo(
-    () =>
-      laterMonthDate.getFullYear() <= currentMonth.year() &&
-      laterMonthDate.getMonth() <= currentMonth.month(),
-    [laterMonthDate, currentMonth]
-  );
+  const isNextButtonDisabled =
+    laterMonthDate.getFullYear() <= currentMonth.year() &&
+    laterMonthDate.getMonth() <= currentMonth.month();
 
-  const handleMonthChange = (num: number) => {
-    setCurrentMonth(num);
-  };
+  const handleMonthChange = useCallback(
+    (num: number) => {
+      setCurrentMonth(num);
+    },
+    [setCurrentMonth]
+  );
 
   return (
     <Container>
@@ -69,5 +67,5 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
-  ${(props) => (props.disabled ? "visibility: hidden;" : "")}
+  ${(props) => props.disabled && "visibility: hidden;"}
 `;
