@@ -1,4 +1,10 @@
 import { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+
+export type BookingDatesType = {
+  checkIn?: dayjs.Dayjs;
+  checkOut?: dayjs.Dayjs;
+};
 
 export interface CalendarProps {
   mainColor?: string;
@@ -24,3 +30,5 @@ export interface CalendarProps {
   resetStyle?: boolean;
   onCheckInOutChange?: (checkInDate?: Date, checkOutDate?: Date) => void;
 }
+
+export type CheckInOutChangeType = CalendarProps["onCheckInOutChange"];

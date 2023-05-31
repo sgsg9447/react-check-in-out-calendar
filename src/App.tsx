@@ -1,7 +1,7 @@
 import { ThemeProvider } from "styled-components";
 import Calendar from "./components/calendar";
-import GlobalStyle from "./styles/GlobalStyles";
 import { CalendarProvider } from "./context/CalendarContext";
+import GlobalStyle from "./styles/GlobalStyles";
 import { CalendarProps } from "./types";
 
 /**
