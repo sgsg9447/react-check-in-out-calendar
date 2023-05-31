@@ -12,7 +12,6 @@ type DateCellProps = {
   isOtherDay: boolean;
   lastDayOfMonth: number;
 };
-// 주어진 날짜가 선택된 체크인 또는 체크아웃 날짜와 일치하는지 확인하는 함수입니다.
 
 const DateCell = ({
   date,
@@ -25,20 +24,15 @@ const DateCell = ({
   const { isRectangular } = calendarSettings;
   const currentDate = dayjs(new Date(year, month - 1, date));
   const { handleClickDate } = useHandleClickDate(today);
-
-  // 날짜 문자열 변환
   const currentDateString = currentDate.format(DATE_FORMAT);
   const todayDateString = today.format(DATE_FORMAT);
   const checkInDateString = bookingDates.checkIn?.format(DATE_FORMAT);
   const checkOutDateString = bookingDates.checkOut?.format(DATE_FORMAT);
-
   const isAfterLastDay = date > lastDayOfMonth;
-  // 선택된 날짜 및 범위 내 날짜 확인
   const isSelectedDate =
     !isOtherDay &&
     (checkInDateString === currentDateString ||
       checkOutDateString === currentDateString);
-
   const isWithinRange =
     !isOtherDay &&
     checkInDateString &&
@@ -130,10 +124,7 @@ const DateNum = styled.div<{
 const Highlighting = styled.div<{ isRectangular?: boolean }>`
   border: 3px solid var(--color-main);
   background-color: var(--color-main);
-  border-radius: ${(props) =>
-    props.isRectangular
-      ? "4px"
-      : "50%"}; // isRectangular prop에 따라 사각형 또는 원형 표시
+  border-radius: ${(props) => (props.isRectangular ? "4px" : "50%")};
   width: 40px;
   height: 40px;
   ${centered}
@@ -142,10 +133,7 @@ const MiddleHighlighting = styled.div<{ isRectangular?: boolean }>`
   width: 40px;
   height: 40px;
   ${centered}
-  border-radius: ${(props) =>
-    props.isRectangular
-      ? "4px"
-      : "50%"}; // isRectangular prop에 따라 사각형 또는 원형 표시
+  border-radius: ${(props) => (props.isRectangular ? "4px" : "50%")};
   background-color: var(--color-sub-main);
 `;
 
