@@ -21,7 +21,7 @@ const DateCell = ({
   lastDayOfMonth,
 }: DateCellProps) => {
   const { bookingDates, today, calendarSettings } = useContext(CalendarContext);
-  const { isRectangular } = calendarSettings;
+  const { isRectangular, resetStyle } = calendarSettings;
   const currentDate = dayjs(new Date(year, month - 1, date));
   const { handleClickDate } = useHandleClickDate(today);
   const currentDateString = currentDate.format(DATE_FORMAT);
@@ -48,16 +48,24 @@ const DateCell = ({
           : undefined
       }
     >
-      {isSelectedDate && <Highlighting isRectangular={isRectangular} />}
-      {isWithinRange && <MiddleHighlighting isRectangular={isRectangular} />}
+      {isSelectedDate && (
+        <Highlighting isRectangular={isRectangular} resetStyle={resetStyle} />
+      )}
+      {isWithinRange && (
+        <MiddleHighlighting
+          isRectangular={isRectangular}
+          resetStyle={resetStyle}
+        />
+      )}
       {currentDateString === todayDateString && (
-        <TodayDot isHighlighting={isSelectedDate} />
+        <TodayDot isHighlighting={isSelectedDate} resetStyle={resetStyle} />
       )}
       <DateNum
         isBeforeToday={currentDateString < todayDateString}
         isOtherDay={isOtherDay}
         isHighlighting={isSelectedDate}
         isRectangular={isRectangular}
+        resetStyle={resetStyle}
       >
         {date}
       </DateNum>
@@ -90,11 +98,14 @@ const DateNum = styled.div<{
   isOtherDay: boolean;
   isBeforeToday: boolean;
   isRectangular?: boolean;
+  resetStyle?: boolean;
 }>`
   display: ${(props) => (props.isOtherDay ? "none" : "block")};
 
   color: ${(props) =>
-    props.isBeforeToday
+    props.resetStyle
+      ? "var(--color-black)"
+      : props.isBeforeToday
       ? "var(--color-light-gray)"
       : props.isHighlighting
       ? "var(--color-white)"
@@ -105,7 +116,9 @@ const DateNum = styled.div<{
       content: "";
       display: block;
       border: ${(props) =>
-        props.isBeforeToday
+        props.resetStyle
+          ? "var(--color-white)"
+          : props.isBeforeToday
           ? "var(--color-white)"
           : "3px solid var(--color-main)"};
       border-radius: ${(props) => (props.isRectangular ? "4px" : "50%")};
@@ -119,25 +132,39 @@ const DateNum = styled.div<{
   z-index: 10;
 `;
 
-const Highlighting = styled.div<{ isRectangular?: boolean }>`
-  border: 3px solid var(--color-main);
-  background-color: var(--color-main);
+const Highlighting = styled.div<{
+  isRectangular?: boolean;
+  resetStyle?: boolean;
+}>`
+  border: ${(props) =>
+    props.resetStyle ? "var(--color-white)" : "3px solid var(--color-main)"};
+  background-color: ${(props) =>
+    props.resetStyle ? "var(--color-white)" : "var(--color-main)"};
   border-radius: ${(props) => (props.isRectangular ? "4px" : "50%")};
   width: 40px;
   height: 40px;
   ${centered}
 `;
-const MiddleHighlighting = styled.div<{ isRectangular?: boolean }>`
+const MiddleHighlighting = styled.div<{
+  isRectangular?: boolean;
+  resetStyle?: boolean;
+}>`
   width: 40px;
   height: 40px;
   ${centered}
   border-radius: ${(props) => (props.isRectangular ? "4px" : "50%")};
-  background-color: var(--color-sub-main);
+  background-color: ${(props) =>
+    props.resetStyle ? "var(--color-white)" : "var(--color-sub-main)"};
 `;
 
-const TodayDot = styled.div<{ isHighlighting: boolean }>`
+const TodayDot = styled.div<{ isHighlighting: boolean; resetStyle?: boolean }>`
   background-color: ${(props) =>
-    props.isHighlighting ? "var(--color-white)" : "var(--color-main)"};
+    props.resetStyle
+      ? "var(--color-white)"
+      : props.isHighlighting
+      ? "var(--color-white)"
+      : "var(--color-main)"};
+
   border-radius: 50%;
   width: 5px;
   height: 5px;
