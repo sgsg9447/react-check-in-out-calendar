@@ -1,17 +1,11 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  calculateNewDates,
-  generateMonthCalendar,
-} from "../../../utils/dateUtils";
-import DateCell from "../dates/DateCell";
-import {
-  DAYS_OF_WEEK_EN,
-  DAYS_OF_WEEK_KO,
-} from "../../../constants/daysOfWeek";
 import { CalendarContext } from "../../../context/CalendarContext";
-import WeekdayHeader from "./WeekdayHeader";
+import {
+  calculateNewDates
+} from "../../../utils/dateUtils";
 import Dates from "../dates";
+import WeekdayHeader from "./WeekdayHeader";
 import Weekdays from "./Weekdays";
 
 const MonthView = ({ index }: { index: number }) => {

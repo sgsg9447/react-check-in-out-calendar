@@ -1,9 +1,9 @@
+import { useContext } from "react";
+import styled from "styled-components";
+import { CalendarContext } from "../../context/CalendarContext";
+import BookingDatesView from "./BookingDatesView";
 import MonthNavigation from "./MonthNavigation";
 import MonthView from "./month";
-import styled from "styled-components";
-import BookingDatesView from "./BookingDatesView";
-import { useContext } from "react";
-import { CalendarContext } from "../../context/CalendarContext";
 
 const Calendar = () => {
   const { calendarSettings } = useContext(CalendarContext);

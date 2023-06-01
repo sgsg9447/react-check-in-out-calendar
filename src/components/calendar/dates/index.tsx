@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import DateCell from "./DateCell";
 import { useContext, useMemo } from "react";
-import { generateMonthCalendar } from "../../../utils/dateUtils";
+import styled from "styled-components";
 import { CalendarContext } from "../../../context/CalendarContext";
+import { generateMonthCalendar } from "../../../utils/dateUtils";
+import DateCell from "./DateCell";
 
 type DatesProps = {
   newYear: number;

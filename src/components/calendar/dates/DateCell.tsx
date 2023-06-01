@@ -1,9 +1,9 @@
-import styled, { css } from "styled-components";
 import dayjs from "dayjs";
 import { useContext } from "react";
+import styled, { css } from "styled-components";
+import { DATE_FORMAT } from "../../../constants/format";
 import { CalendarContext } from "../../../context/CalendarContext";
 import useHandleClickDate from "../../../hooks/useHandleClickDate";
-import { DATE_FORMAT } from "../../../constants/format";
 
 type DateCellProps = {
   date: number;
@@ -26,9 +26,9 @@ const DateCell = ({
   const { handleClickDate } = useHandleClickDate(today);
   const currentDateString = currentDate.format(DATE_FORMAT);
   const todayDateString = today.format(DATE_FORMAT);
+  const isAfterLastDay = date > lastDayOfMonth;
   const checkInDateString = bookingDates.checkIn?.format(DATE_FORMAT);
   const checkOutDateString = bookingDates.checkOut?.format(DATE_FORMAT);
-  const isAfterLastDay = date > lastDayOfMonth;
   const isSelectedDate =
     !isOtherDay &&
     (checkInDateString === currentDateString ||
@@ -40,20 +40,19 @@ const DateCell = ({
     checkInDateString < currentDateString &&
     currentDateString < checkOutDateString;
 
-  const handleClickDateWrapper = () => {
-    if (!isAfterLastDay && !isOtherDay) {
-      handleClickDate(currentDate);
-    }
-  };
-
   return (
-    <DatesContainer onClick={handleClickDateWrapper}>
+    <DatesContainer
+      onClick={
+        !isAfterLastDay && !isOtherDay
+          ? () => handleClickDate(currentDate)
+          : undefined
+      }
+    >
       {isSelectedDate && <Highlighting isRectangular={isRectangular} />}
       {isWithinRange && <MiddleHighlighting isRectangular={isRectangular} />}
       {currentDateString === todayDateString && (
         <TodayDot isHighlighting={isSelectedDate} />
       )}
-
       <DateNum
         isBeforeToday={currentDateString < todayDateString}
         isOtherDay={isOtherDay}
@@ -67,7 +66,6 @@ const DateCell = ({
 };
 
 export default DateCell;
-
 const centered = css`
   position: absolute;
   top: 50%;

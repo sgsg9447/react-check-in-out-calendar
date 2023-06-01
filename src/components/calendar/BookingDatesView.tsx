@@ -1,9 +1,9 @@
+import dayjs from "dayjs";
 import { useContext } from "react";
 import styled from "styled-components";
-import { CalendarContext } from "../../context/CalendarContext";
-import { languageTextMap } from "../../constants/languages";
 import { DATE_FORMAT } from "../../constants/format";
-import dayjs from "dayjs";
+import { languageTextMap } from "../../constants/languages";
+import { CalendarContext } from "../../context/CalendarContext";
 
 const BookingDatesView = () => {
   const { bookingDates, calendarSettings } = useContext(CalendarContext);
