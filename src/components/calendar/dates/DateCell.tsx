@@ -1,9 +1,9 @@
-import styled, { css } from "styled-components";
 import dayjs from "dayjs";
 import { useContext } from "react";
-import { CalendarContext } from "../../context/CalendarContext";
-import useHandleClickDate from "../../hooks/useHandleClickDate";
-import { DATE_FORMAT } from "../../constants/format";
+import styled, { css } from "styled-components";
+import { DATE_FORMAT } from "../../../constants/format";
+import { CalendarContext } from "../../../context/CalendarContext";
+import useHandleClickDate from "../../../hooks/useHandleClickDate";
 
 type DateCellProps = {
   date: number;
@@ -12,7 +12,6 @@ type DateCellProps = {
   isOtherDay: boolean;
   lastDayOfMonth: number;
 };
-// 주어진 날짜가 선택된 체크인 또는 체크아웃 날짜와 일치하는지 확인하는 함수입니다.
 
 const DateCell = ({
   date,
@@ -22,23 +21,18 @@ const DateCell = ({
   lastDayOfMonth,
 }: DateCellProps) => {
   const { bookingDates, today, calendarSettings } = useContext(CalendarContext);
-  const { isRectangular } = calendarSettings;
+  const { isRectangular, resetStyle } = calendarSettings;
   const currentDate = dayjs(new Date(year, month - 1, date));
   const { handleClickDate } = useHandleClickDate(today);
-
-  // 날짜 문자열 변환
   const currentDateString = currentDate.format(DATE_FORMAT);
   const todayDateString = today.format(DATE_FORMAT);
+  const isAfterLastDay = date > lastDayOfMonth;
   const checkInDateString = bookingDates.checkIn?.format(DATE_FORMAT);
   const checkOutDateString = bookingDates.checkOut?.format(DATE_FORMAT);
-
-  const isAfterLastDay = date > lastDayOfMonth;
-  // 선택된 날짜 및 범위 내 날짜 확인
   const isSelectedDate =
     !isOtherDay &&
     (checkInDateString === currentDateString ||
       checkOutDateString === currentDateString);
-
   const isWithinRange =
     !isOtherDay &&
     checkInDateString &&
@@ -46,25 +40,32 @@ const DateCell = ({
     checkInDateString < currentDateString &&
     currentDateString < checkOutDateString;
 
-  const handleClickDateWrapper = () => {
-    if (!isAfterLastDay && !isOtherDay) {
-      handleClickDate(currentDate);
-    }
-  };
-
   return (
-    <DatesContainer onClick={handleClickDateWrapper}>
-      {isSelectedDate && <Highlighting isRectangular={isRectangular} />}
-      {isWithinRange && <MiddleHighlighting isRectangular={isRectangular} />}
-      {currentDateString === todayDateString && (
-        <TodayDot isHighlighting={isSelectedDate} />
+    <DatesContainer
+      onClick={
+        !isAfterLastDay && !isOtherDay
+          ? () => handleClickDate(currentDate)
+          : undefined
+      }
+    >
+      {isSelectedDate && (
+        <Highlighting isRectangular={isRectangular} resetStyle={resetStyle} />
       )}
-
+      {isWithinRange && (
+        <MiddleHighlighting
+          isRectangular={isRectangular}
+          resetStyle={resetStyle}
+        />
+      )}
+      {currentDateString === todayDateString && (
+        <TodayDot isHighlighting={isSelectedDate} resetStyle={resetStyle} />
+      )}
       <DateNum
         isBeforeToday={currentDateString < todayDateString}
         isOtherDay={isOtherDay}
         isHighlighting={isSelectedDate}
         isRectangular={isRectangular}
+        resetStyle={resetStyle}
       >
         {date}
       </DateNum>
@@ -73,7 +74,6 @@ const DateCell = ({
 };
 
 export default DateCell;
-
 const centered = css`
   position: absolute;
   top: 50%;
@@ -98,11 +98,14 @@ const DateNum = styled.div<{
   isOtherDay: boolean;
   isBeforeToday: boolean;
   isRectangular?: boolean;
+  resetStyle?: boolean;
 }>`
   display: ${(props) => (props.isOtherDay ? "none" : "block")};
 
   color: ${(props) =>
-    props.isBeforeToday
+    props.resetStyle
+      ? "var(--color-black)"
+      : props.isBeforeToday
       ? "var(--color-light-gray)"
       : props.isHighlighting
       ? "var(--color-white)"
@@ -113,7 +116,9 @@ const DateNum = styled.div<{
       content: "";
       display: block;
       border: ${(props) =>
-        props.isBeforeToday
+        props.resetStyle
+          ? "var(--color-white)"
+          : props.isBeforeToday
           ? "var(--color-white)"
           : "3px solid var(--color-main)"};
       border-radius: ${(props) => (props.isRectangular ? "4px" : "50%")};
@@ -127,31 +132,39 @@ const DateNum = styled.div<{
   z-index: 10;
 `;
 
-const Highlighting = styled.div<{ isRectangular?: boolean }>`
-  border: 3px solid var(--color-main);
-  background-color: var(--color-main);
-  border-radius: ${(props) =>
-    props.isRectangular
-      ? "4px"
-      : "50%"}; // isRectangular prop에 따라 사각형 또는 원형 표시
+const Highlighting = styled.div<{
+  isRectangular?: boolean;
+  resetStyle?: boolean;
+}>`
+  border: ${(props) =>
+    props.resetStyle ? "var(--color-white)" : "3px solid var(--color-main)"};
+  background-color: ${(props) =>
+    props.resetStyle ? "var(--color-white)" : "var(--color-main)"};
+  border-radius: ${(props) => (props.isRectangular ? "4px" : "50%")};
   width: 40px;
   height: 40px;
   ${centered}
 `;
-const MiddleHighlighting = styled.div<{ isRectangular?: boolean }>`
+const MiddleHighlighting = styled.div<{
+  isRectangular?: boolean;
+  resetStyle?: boolean;
+}>`
   width: 40px;
   height: 40px;
   ${centered}
-  border-radius: ${(props) =>
-    props.isRectangular
-      ? "4px"
-      : "50%"}; // isRectangular prop에 따라 사각형 또는 원형 표시
-  background-color: var(--color-sub-main);
+  border-radius: ${(props) => (props.isRectangular ? "4px" : "50%")};
+  background-color: ${(props) =>
+    props.resetStyle ? "var(--color-white)" : "var(--color-sub-main)"};
 `;
 
-const TodayDot = styled.div<{ isHighlighting: boolean }>`
+const TodayDot = styled.div<{ isHighlighting: boolean; resetStyle?: boolean }>`
   background-color: ${(props) =>
-    props.isHighlighting ? "var(--color-white)" : "var(--color-main)"};
+    props.resetStyle
+      ? "var(--color-white)"
+      : props.isHighlighting
+      ? "var(--color-white)"
+      : "var(--color-main)"};
+
   border-radius: 50%;
   width: 5px;
   height: 5px;

@@ -1,8 +1,9 @@
+import dayjs from "dayjs";
 import { useContext } from "react";
 import styled from "styled-components";
-import { CalendarContext } from "../../context/CalendarContext";
-import { languageTextMap } from "../../constants/languages";
 import { DATE_FORMAT } from "../../constants/format";
+import { languageTextMap } from "../../constants/languages";
+import { CalendarContext } from "../../context/CalendarContext";
 
 const BookingDatesView = () => {
   const { bookingDates, calendarSettings } = useContext(CalendarContext);
@@ -11,18 +12,18 @@ const BookingDatesView = () => {
   const { checkIn: checkInText, checkOut: checkOutText } =
     languageTextMap[language];
 
+  const renderDateView = (title: string, date?: dayjs.Dayjs) => (
+    <BookingDatesViewBox>
+      <BookingDatesTitle>
+        {title} {date?.format(DATE_FORMAT)}
+      </BookingDatesTitle>
+    </BookingDatesViewBox>
+  );
+
   return (
     <BookingDatesViewContainer>
-      <BookingDatesViewBox>
-        <BookingDatesTitle>
-          {checkInText} {bookingDates.checkIn?.format(DATE_FORMAT)}
-        </BookingDatesTitle>
-      </BookingDatesViewBox>
-      <BookingDatesViewBox>
-        <BookingDatesTitle>
-          {checkOutText} {bookingDates.checkOut?.format(DATE_FORMAT)}
-        </BookingDatesTitle>
-      </BookingDatesViewBox>
+      {renderDateView(checkInText, bookingDates.checkIn)}
+      {renderDateView(checkOutText, bookingDates.checkOut)}
     </BookingDatesViewContainer>
   );
 };
