@@ -29,7 +29,7 @@ export default Weekdays;
 const Days = styled.div`
   display: flex;
   color: var(--color-black);
-  width: 100%;
+  /* width: 100%; */
   height: 2rem;
   justify-content: space-around;
   align-items: center;

@@ -15,9 +15,7 @@ const WeekdayHeader = ({ year, month, language }: WeekdayHeaderProps) => {
 
   return (
     <WeekdayHeaderContainer>
-      <WeekdayHeaderText>
-        {getFormattedDateText(year, month, language)}
-      </WeekdayHeaderText>
+      {getFormattedDateText(year, month, language)}
     </WeekdayHeaderContainer>
   );
 };
@@ -26,15 +24,8 @@ export default WeekdayHeader;
 
 const WeekdayHeaderContainer = styled.div`
   display: flex;
-  width: 100%;
-  height: 5vh;
-  margin: 1.5rem 0;
-  position: relative;
-`;
-
-const WeekdayHeaderText = styled.div`
-  display: flex;
   justify-content: space-evenly;
   align-items: center;
-  width: 100%;
+  height: 5vh;
+  margin: 1.5rem 0;
 `;
