@@ -1,6 +1,6 @@
 {
   "name": "react-check-in-out-calendar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React Check-In/Out Calendar is a customizable calendar component for React applications, built with TypeScript. It provides a user-friendly interface to select check-in and check-out dates for various booking or reservation systems.",
   "license": "MIT",
   "keywords": [
