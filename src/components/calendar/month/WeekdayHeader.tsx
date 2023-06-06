@@ -11,7 +11,7 @@ const WeekdayHeader = ({ year, month, language }: WeekdayHeaderProps) => {
     year: number,
     month: number,
     language: string
-  ) => (language === "ko" ? `${year}년 ${month}월` : `${year}. ${month}`);
+  ) => (language === "ko" ? `${year}년 ${month}월` : `${month}. ${year}`);
 
   return (
     <WeekdayHeaderContainer>

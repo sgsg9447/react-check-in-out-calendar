@@ -1,6 +1,7 @@
 # react-check-in-out-calendar
 
-<img width="1511" alt="image" src="https://github.com/sgsg9447/react-check-in-out-calendar-core/assets/87474789/b841ad1d-9e27-444d-aebb-3b9a2adb978d">
+<img width="1502" alt="image" src="https://github.com/sgsg9447/react-check-in-out-calendar-core/assets/87474789/9c3e6bc3-22d7-4ecd-8e86-c391dd9f71e9">
+
 
 <img width="1510" alt="image" src="https://github.com/sgsg9447/react-check-in-out-calendar-core/assets/87474789/c947c43e-5438-4016-8f7b-6554cc6bd20d">
 
