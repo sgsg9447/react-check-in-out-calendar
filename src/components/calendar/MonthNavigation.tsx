@@ -50,7 +50,6 @@ const MonthNavigation = () => {
 export default MonthNavigation;
 
 const Container = styled.div`
-  width: 100%;
   display: flex;
   position: relative;
 `;
