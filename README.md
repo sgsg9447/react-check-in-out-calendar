@@ -1,5 +1,12 @@
 # react-check-in-out-calendar
 
+<img width="1502" alt="image" src="https://github.com/sgsg9447/react-check-in-out-calendar-core/assets/87474789/9c3e6bc3-22d7-4ecd-8e86-c391dd9f71e9">
+
+
+<img width="1510" alt="image" src="https://github.com/sgsg9447/react-check-in-out-calendar-core/assets/87474789/c947c43e-5438-4016-8f7b-6554cc6bd20d">
+
+
+
 This package provides a simple and customizable calendar component for React applications. It uses the power of styled-components for styling, the flexibility of React context for state management, and the dayjs library for all the date manipulations.
 
 ## Installation
@@ -72,6 +79,8 @@ Core Library and UI Library Separation: We are also planning to separate the cor
 
 Stay tuned for these upcoming updates, and feel free to reach out with any questions or suggestions you may have.
 
+## Core Library
+[react-check-in-out-calendar-core](https://www.npmjs.com/package/react-check-in-out-calendar-core)
 
 ## Contact
 
@@ -79,4 +88,3 @@ If you have any questions or suggestions, please feel free to contact me. I'm al
 
 - Email: sgsg9447@gmail.com
 - GitHub: [sgsg9447](https://github.com/sgsg9447)
-# react-check-in-out-calendar-core
